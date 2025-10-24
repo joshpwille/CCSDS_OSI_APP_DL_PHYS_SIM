@@ -1,0 +1,857 @@
+options:
+  parameters:
+    author: Joshua Wille
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: new_rx_chain_v0
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: new_rx_chain_v0
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: ASM_BYTES
+  id: variable
+  parameters:
+    comment: ASM = 0x1A CF FC 1D (4 bytes)
+    value: len(ASM_MARKER)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1248, 132.0]
+    rotation: 0
+    state: enabled
+- name: ASM_MARKER
+  id: variable
+  parameters:
+    comment: ''
+    value: (0x1A, 0xCF, 0xFC, 0x1D)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1112, 132.0]
+    rotation: 0
+    state: enabled
+- name: BYTES_PER_FRAME
+  id: variable
+  parameters:
+    comment: ''
+    value: '1115'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [888, 260.0]
+    rotation: 0
+    state: enabled
+- name: CADU_RS_ASM_BYTES
+  id: variable
+  parameters:
+    comment: ''
+    value: RS_BYTES + ASM_BYTES
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1112, 260.0]
+    rotation: 0
+    state: enabled
+- name: I_RS
+  id: variable
+  parameters:
+    comment: "RS interleave depth (because 223 \xD7 5 = 1115)"
+    value: '5'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1112, 52.0]
+    rotation: 0
+    state: enabled
+- name: RSYM
+  id: variable
+  parameters:
+    comment: ''
+    value: samp_rate/sps
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [240, 148.0]
+    rotation: 0
+    state: true
+- name: RS_BYTES
+  id: variable
+  parameters:
+    comment: ''
+    value: 255 * I_RS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1112, 196.0]
+    rotation: 0
+    state: enabled
+- name: RS_info_bytes
+  id: variable
+  parameters:
+    comment: ''
+    value: '223'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [680, 260.0]
+    rotation: 0
+    state: true
+- name: alpha
+  id: variable
+  parameters:
+    comment: ''
+    value: '0.35'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [336, 20.0]
+    rotation: 0
+    state: true
+- name: costas_bw
+  id: variable
+  parameters:
+    comment: ''
+    value: 2e-3
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1440, 196.0]
+    rotation: 0
+    state: true
+- name: costas_order
+  id: variable
+  parameters:
+    comment: 4 b/c qpsk
+    value: '4'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1440, 260.0]
+    rotation: 0
+    state: true
+- name: cuttoff_freq
+  id: variable
+  parameters:
+    comment: ''
+    value: 0.6 * (1 + alpha) * RSYM
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [240, 212.0]
+    rotation: 0
+    state: true
+- name: filter_size
+  id: variable
+  parameters:
+    comment: ''
+    value: '32'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [456, 36.0]
+    rotation: 0
+    state: true
+- name: loop_bw
+  id: variable
+  parameters:
+    comment: ''
+    value: '0.005'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [424, 228.0]
+    rotation: 0
+    state: true
+- name: qpsk
+  id: variable_constellation_rect
+  parameters:
+    comment: ''
+    const_points: '[0.707+0.707j, -0.707+0.707j, -0.707-0.707j, 0.707-0.707j]'
+    imag_sect: '2'
+    precision: '8'
+    real_sect: '2'
+    rot_sym: '4'
+    soft_dec_lut: None
+    sym_map: '[0, 1, 2, 3]'
+    w_imag_sect: '1'
+    w_real_sect: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 124.0]
+    rotation: 0
+    state: enabled
+- name: rrc_taps
+  id: variable
+  parameters:
+    comment: ''
+    value: firdes.root_raised_cosine(1.0, samp_rate, RSYM, alpha, span_symbols*sps*filter_size)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [424, 164.0]
+    rotation: 0
+    state: true
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: 2e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [240, 20.0]
+    rotation: 0
+    state: enabled
+- name: soft_flip
+  id: variable
+  parameters:
+    comment: ''
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [800, 260.0]
+    rotation: 0
+    state: true
+- name: span_symbols
+  id: variable
+  parameters:
+    comment: ''
+    value: '8'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [432, 100.0]
+    rotation: 0
+    state: true
+- name: sps
+  id: variable
+  parameters:
+    comment: ''
+    value: '8'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [240, 84.0]
+    rotation: 0
+    state: true
+- name: trans_width
+  id: variable
+  parameters:
+    comment: ''
+    value: 0.005 * samp_rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [240, 276.0]
+    rotation: 0
+    state: true
+- name: blocks_complex_to_float_0
+  id: blocks_complex_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [752, 352.0]
+    rotation: 0
+    state: true
+- name: blocks_delay_0
+  id: blocks_delay
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    delay: int(sps//2)
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_ports: '1'
+    showports: 'False'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [968, 372.0]
+    rotation: 0
+    state: true
+- name: blocks_file_sink_0
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Downloads/tm_stagin_grc/qpsk/data/Rx_data/unwrapped.bin
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [224, 596.0]
+    rotation: 180
+    state: true
+- name: blocks_file_sink_1
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Downloads/tm_stagin_grc/qpsk/data/Rx_data/ppcs_out.cfile
+    type: complex
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [744, 444.0]
+    rotation: 0
+    state: true
+- name: blocks_file_sink_1_0
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Downloads/tm_stagin_grc/qpsk/data/Rx_data/source_check.cfile
+    type: complex
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [32, 500.0]
+    rotation: 180
+    state: true
+- name: blocks_file_sink_1_1
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Downloads/tm_stagin_grc/qpsk/data/Rx_data/viterbi_out.bin
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [752, 708.0]
+    rotation: 0
+    state: true
+- name: blocks_file_source_0
+  id: blocks_file_source
+  parameters:
+    affinity: ''
+    alias: ''
+    begin_tag: pmt.PMT_NIL
+    comment: ''
+    file: /home/dogg/Downloads/tm_stagin_grc/qpsk/data/Rx_data/tx_out.cfile
+    length: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    repeat: 'True'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [32, 372.0]
+    rotation: 0
+    state: true
+- name: blocks_float_to_complex_0
+  id: blocks_float_to_complex
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1136, 352.0]
+    rotation: 0
+    state: true
+- name: blocks_multiply_const_vxx_0
+  id: blocks_multiply_const_vxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: soft_flip
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1232, 612.0]
+    rotation: 180
+    state: true
+- name: blocks_repack_bits_bb_0
+  id: blocks_repack_bits_bb
+  parameters:
+    affinity: ''
+    alias: ''
+    align_output: 'False'
+    comment: ''
+    endianness: gr.GR_MSB_FIRST
+    k: '1'
+    l: '8'
+    len_tag_key: '""'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [728, 604.0]
+    rotation: 180
+    state: true
+- name: blocks_stream_to_tagged_stream_1
+  id: blocks_stream_to_tagged_stream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    packet_len: CADU_RS_ASM_BYTES
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [448, 604.0]
+    rotation: 180
+    state: true
+- name: digital_constellation_soft_decoder_cf_0
+  id: digital_constellation_soft_decoder_cf
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    constellation: qpsk
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1464, 612.0]
+    rotation: 180
+    state: true
+- name: digital_costas_loop_cc_0
+  id: digital_costas_loop_cc
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    order: costas_order
+    use_snr: 'False'
+    w: costas_bw
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1440, 336.0]
+    rotation: 0
+    state: true
+- name: digital_pfb_clock_sync_xxx_0
+  id: digital_pfb_clock_sync_xxx
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    filter_size: filter_size
+    init_phase: '16'
+    loop_bw: loop_bw
+    max_dev: '1.5'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    osps: '1'
+    sps: sps
+    taps: rrc_taps
+    type: ccf
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [448, 356.0]
+    rotation: 0
+    state: true
+- name: epy_block_0
+  id: epy_block
+  parameters:
+    K: ''
+    _source_code: "import numpy as np\nfrom gnuradio import gr\nimport pmt\n\nclass\
+      \ blk(gr.sync_block):\n    \"\"\"\n    CCSDS Viterbi decoder (K=7, r=1/2, 171/133)\
+      \ \u2014 SOFT decision (float inputs).\n\n    Input : float32 per coded bit\
+      \ (one float per bit), framed by 'packet_len' tags\n            whose value\
+      \ is the NUMBER OF CODED BITS in the frame (not bytes).\n            For a pre-FEC\
+      \ frame of L bytes, packet_len_in = 16*L.\n            'soft_mode' controls\
+      \ interpretation of floats:\n              - 'pm1' (default): +A \u2248 bit\
+      \ 0, -A \u2248 bit 1\n              - 'llr'         : +LLR favors 0, -LLR favors\
+      \ 1\n    Output: uint8 bytes with 'packet_len' tag = L (decoded bytes), tag\
+      \ emitted\n            at the FIRST output byte of each frame (mirrors your\
+      \ TX scheduling).\n\n    Notes:\n      - Assumes reset_each_frame=True at encoder\
+      \ (trellis start state = 0).\n      - If your upstream produces different scaling,\
+      \ no problem; pm1 mode\n        uses Euclidean branch metrics, scale-invariant\
+      \ up to a constant.\n    \"\"\"\n    def __init__(self,\n                 len_tag_key=\"\
+      packet_len\",\n                 K=7,\n                 gen0=0o171,\n       \
+      \          gen1=0o133,\n                 reset_each_frame=True,\n          \
+      \       soft_mode=\"pm1\"):  # 'pm1' or 'llr'\n        gr.sync_block.__init__(\n\
+      \            self,\n            name=\"ccsds_viterbi_k7_r12_soft_epy\",\n  \
+      \          in_sig=[np.float32],\n            out_sig=[np.uint8],\n        )\n\
+      \        self.len_tag_key = str(len_tag_key)\n        self.len_key_sym = pmt.intern(self.len_tag_key)\n\
+      \        self.K = int(K)\n        self.gen0 = int(gen0)\n        self.gen1 =\
+      \ int(gen1)\n        self.reset_each_frame = bool(reset_each_frame)\n      \
+      \  self.soft_mode = str(soft_mode).lower()\n\n        # Trellis\n        self.NSTATES\
+      \ = 1 << (self.K - 1)  # 64\n        self._trellis_ns   = np.zeros((self.NSTATES,\
+      \ 2), dtype=np.uint8)\n        self._trellis_obit = np.zeros((self.NSTATES,\
+      \ 2, 2), dtype=np.uint8)  # expected 2 bits\n        self._build_trellis()\n\
+      \n        # Buffers & frame bookkeeping\n        self._inbuf  = np.empty(0,\
+      \ dtype=np.float32)  # soft bits buffer\n        self._outbuf = bytearray()\n\
+      \        self._frame_queue_bits = []   # input frame sizes in *bits* (coded)\n\
+      \        self._pending_out_frames = [] # decoded frame sizes in *bytes*\n  \
+      \      self._head_remaining = 0\n\n        self.set_tag_propagation_policy(gr.TPP_DONT)\n\
+      \n    # ---------- trellis ----------\n    @staticmethod\n    def _parity_u32(x:\
+      \ int) -> int:\n        # fast parity (like your TX)\n        v = x\n      \
+      \  v ^= v >> 16; v ^= v >> 8; v ^= v >> 4\n        v &= 0xF\n        return\
+      \ (0x6996 >> v) & 1\n\n    def _build_trellis(self):\n        maskK = (1 <<\
+      \ self.K) - 1\n        maskS = (1 << (self.K - 1)) - 1\n        for s in range(self.NSTATES):\n\
+      \            for u in (0, 1):\n                full = ((s << 1) | u) & maskK\n\
+      \                ns = (full >> 1) & maskS\n                b0 = self._parity_u32(full\
+      \ & self.gen0)\n                b1 = self._parity_u32(full & self.gen1)\n  \
+      \              self._trellis_ns[s, u] = ns\n                self._trellis_obit[s,\
+      \ u, 0] = b0\n                self._trellis_obit[s, u, 1] = b1\n\n    # ----------\
+      \ branch metrics ----------\n    @staticmethod\n    def _euclid_pair(r0, r1,\
+      \ e0, e1):\n        \"\"\"\n        Euclidean metric for 'pm1' softs:\n    \
+      \    map expected bit 0 -> +1, bit 1 -> -1, then sum squared error.\n      \
+      \  \"\"\"\n        t0 = 1.0 if e0 == 0 else -1.0\n        t1 = 1.0 if e1 ==\
+      \ 0 else -1.0\n        d0 = r0 - t0\n        d1 = r1 - t1\n        return d0*d0\
+      \ + d1*d1\n\n    @staticmethod\n    def _llr_pair(r0, r1, e0, e1):\n       \
+      \ \"\"\"\n        LLR metric (additive, smaller=better):\n          if expected=0,\
+      \ cost += -LLR; if expected=1, cost += +LLR\n        \"\"\"\n        m0 = (-r0)\
+      \ if e0 == 0 else (+r0)\n        m1 = (-r1) if e1 == 0 else (+r1)\n        #\
+      \ ensure non-negative by offset (optional); not required for DP\n        return\
+      \ m0 + m1\n\n    # ---------- Viterbi core (soft) ----------\n    def _viterbi_soft_decode(self,\
+      \ soft_bits: np.ndarray) -> bytes:\n        # Expect pairs of soft bits per\
+      \ input bit\n        nsoft = soft_bits.size\n        if nsoft & 1:\n       \
+      \     soft_bits = soft_bits[:-1]\n            nsoft -= 1\n        nsym = nsoft\
+      \ // 2  # number of input bits to recover\n\n        # Path metrics\n      \
+      \  BIG = 1e12\n        pm = np.full(self.NSTATES, BIG, dtype=np.float64)\n \
+      \       pm_new = np.full(self.NSTATES, BIG, dtype=np.float64)\n        if self.reset_each_frame:\n\
+      \            pm[:] = BIG; pm[0] = 0.0\n        else:\n            pm[:] = 0.0\n\
+      \n        prev_state  = np.zeros((nsym, self.NSTATES), dtype=np.uint8)\n   \
+      \     decided_bit = np.zeros((nsym, self.NSTATES), dtype=np.uint8)\n\n     \
+      \   use_llr = (self.soft_mode == \"llr\")\n\n        # iterate symbol pairs\n\
+      \        for t in range(nsym):\n            r0 = float(soft_bits[2*t + 0])\n\
+      \            r1 = float(soft_bits[2*t + 1])\n            pm_new[:] = BIG\n \
+      \           for s in range(self.NSTATES):\n                cost_s = pm[s]\n\
+      \                if cost_s >= BIG:  # unreachable\n                    continue\n\
+      \n                # branch u=0\n                ns0 = self._trellis_ns[s, 0]\n\
+      \                e00 = int(self._trellis_obit[s, 0, 0])\n                e01\
+      \ = int(self._trellis_obit[s, 0, 1])\n                bm0 = (self._llr_pair(r0,\
+      \ r1, e00, e01) if use_llr\n                       else self._euclid_pair(r0,\
+      \ r1, e00, e01))\n                c0 = cost_s + bm0\n                if c0 <\
+      \ pm_new[ns0]:\n                    pm_new[ns0] = c0\n                    prev_state[t,\
+      \ ns0]  = s\n                    decided_bit[t, ns0] = 0\n\n               \
+      \ # branch u=1\n                ns1 = self._trellis_ns[s, 1]\n             \
+      \   e10 = int(self._trellis_obit[s, 1, 0])\n                e11 = int(self._trellis_obit[s,\
+      \ 1, 1])\n                bm1 = (self._llr_pair(r0, r1, e10, e11) if use_llr\n\
+      \                       else self._euclid_pair(r0, r1, e10, e11))\n        \
+      \        c1 = cost_s + bm1\n                if c1 < pm_new[ns1]:\n         \
+      \           pm_new[ns1] = c1\n                    prev_state[t, ns1]  = s\n\
+      \                    decided_bit[t, ns1] = 1\n\n            pm, pm_new = pm_new,\
+      \ pm\n\n        # traceback\n        end_state = int(np.argmin(pm))\n      \
+      \  bits_dec = np.zeros(nsym, dtype=np.uint8)\n        s = end_state\n      \
+      \  for t in range(nsym-1, -1, -1):\n            b = decided_bit[t, s]\n    \
+      \        bits_dec[t] = b\n            s = prev_state[t, s]\n\n        # pack\
+      \ to bytes (MSB-first inside each byte)\n        pad = (8 - (nsym % 8)) % 8\n\
+      \        if pad:\n            bits_dec = np.concatenate([bits_dec, np.zeros(pad,\
+      \ dtype=np.uint8)])\n        bits_dec = bits_dec.reshape(-1, 8)\n        shifts\
+      \ = np.arange(7, -1, -1, dtype=np.uint8)\n        packed = (bits_dec * (1 <<\
+      \ shifts)).sum(axis=1).astype(np.uint8)\n        return bytes(packed)\n\n  \
+      \  # ---------- tag parsing ----------\n    def _enqueue_len_tags(self, ninput_items):\n\
+      \        # collect tags in current window\n        tags = self.get_tags_in_window(0,\
+      \ 0, ninput_items)\n        for t in tags:\n            try:\n             \
+      \   key_str = pmt.symbol_to_string(t.key)\n            except Exception:\n \
+      \               continue\n            if key_str == self.len_tag_key and pmt.is_integer(t.value):\n\
+      \                L_soft_bits = int(pmt.to_long(t.value))\n                if\
+      \ L_soft_bits > 0:\n                    self._frame_queue_bits.append(L_soft_bits)\n\
+      \n    def _process_frames_to_outbuf(self):\n        # Consume frames as soon\
+      \ as enough soft bits are buffered\n        while self._frame_queue_bits:\n\
+      \            need_bits = self._frame_queue_bits[0]\n            if self._inbuf.size\
+      \ < need_bits:\n                break\n            soft = self._inbuf[:need_bits].astype(np.float32,\
+      \ copy=False)\n            self._inbuf = self._inbuf[need_bits:]\n         \
+      \   self._frame_queue_bits.pop(0)\n\n            # Decode\n            dec_bytes\
+      \ = self._viterbi_soft_decode(soft)\n            self._outbuf += dec_bytes\n\
+      \n            # Output length in BYTES = need_bits / 16\n            L_out =\
+      \ need_bits // 16\n            self._pending_out_frames.append(L_out)\n\n  \
+      \  # ---------- work ----------\n    def work(self, input_items, output_items):\n\
+      \        in0 = input_items[0]  # float32\n        out0 = output_items[0]\n\n\
+      \        n_in = len(in0)\n        if n_in:\n            # append softs\n   \
+      \         if self._inbuf.size == 0:\n                self._inbuf = np.array(in0,\
+      \ dtype=np.float32, copy=True)\n            else:\n                self._inbuf\
+      \ = np.concatenate([self._inbuf, np.array(in0, dtype=np.float32, copy=True)])\n\
+      \            # discover frame tags and try to decode\n            self._enqueue_len_tags(n_in)\n\
+      \            self._process_frames_to_outbuf()\n\n        if not self._outbuf:\n\
+      \            self.consume_each(n_in)\n            return 0\n\n        ow = self.nitems_written(0)\n\
+      \        space = len(out0)\n        produced = 0\n\n        # Emit output tag\
+      \ at the first byte of each decoded frame\n        while space > 0 and self._outbuf:\n\
+      \            if self._head_remaining == 0:\n                if not self._pending_out_frames:\n\
+      \                    break\n                self._head_remaining = self._pending_out_frames[0]\n\
+      \                self.add_item_tag(0, ow + produced, self.len_key_sym, pmt.from_long(self._head_remaining))\n\
+      \n            chunk = min(space, self._head_remaining, len(self._outbuf))\n\
+      \            if chunk <= 0:\n                break\n\n            out0[produced:produced+chunk]\
+      \ = np.frombuffer(self._outbuf[:chunk], dtype=np.uint8)\n            del self._outbuf[:chunk]\n\
+      \n            produced += chunk\n            space    -= chunk\n           \
+      \ self._head_remaining -= chunk\n\n            if self._head_remaining == 0\
+      \ and self._pending_out_frames:\n                self._pending_out_frames.pop(0)\n\
+      \n        self.consume_each(n_in)\n        return produced\n\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    gen0: ''
+    gen1: ''
+    len_tag_key: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    reset_each_frame: ''
+    soft_mode: ''
+  states:
+    _io_cache: "('ccsds_viterbi_k7_r12_soft_epy', 'blk', [('len_tag_key', \"'packet_len'\"\
+      ), ('K', '7'), ('gen0', '121'), ('gen1', '91'), ('reset_each_frame', 'True'),\
+      \ ('soft_mode', \"'pm1'\")], [('0', 'float', 1)], [('0', 'byte', 1)], \"\\n\
+      \    CCSDS Viterbi decoder (K=7, r=1/2, 171/133) \u2014 SOFT decision (float\
+      \ inputs).\\n\\n    Input : float32 per coded bit (one float per bit), framed\
+      \ by 'packet_len' tags\\n            whose value is the NUMBER OF CODED BITS\
+      \ in the frame (not bytes).\\n            For a pre-FEC frame of L bytes, packet_len_in\
+      \ = 16*L.\\n            'soft_mode' controls interpretation of floats:\\n  \
+      \            - 'pm1' (default): +A \u2248 bit 0, -A \u2248 bit 1\\n        \
+      \      - 'llr'         : +LLR favors 0, -LLR favors 1\\n    Output: uint8 bytes\
+      \ with 'packet_len' tag = L (decoded bytes), tag emitted\\n            at the\
+      \ FIRST output byte of each frame (mirrors your TX scheduling).\\n\\n    Notes:\\\
+      n      - Assumes reset_each_frame=True at encoder (trellis start state = 0).\\\
+      n      - If your upstream produces different scaling, no problem; pm1 mode\\\
+      n        uses Euclidean branch metrics, scale-invariant up to a constant.\\\
+      n    \", ['K', 'gen0', 'gen1', 'len_tag_key', 'reset_each_frame', 'soft_mode'])"
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [952, 572.0]
+    rotation: 180
+    state: true
+- name: low_pass_filter_0
+  id: low_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: ''
+    cutoff_freq: cuttoff_freq
+    decim: '1'
+    gain: '1'
+    interp: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    type: fir_filter_ccf
+    width: trans_width
+    win: window.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [256, 356.0]
+    rotation: 0
+    state: true
+- name: qtgui_const_sink_x_0
+  id: qtgui_const_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    axislabels: 'True'
+    color1: '"blue"'
+    color10: '"red"'
+    color2: '"red"'
+    color3: '"red"'
+    color4: '"red"'
+    color5: '"red"'
+    color6: '"red"'
+    color7: '"red"'
+    color8: '"red"'
+    color9: '"red"'
+    comment: ''
+    grid: 'False'
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'True'
+    marker1: '0'
+    marker10: '0'
+    marker2: '0'
+    marker3: '0'
+    marker4: '0'
+    marker5: '0'
+    marker6: '0'
+    marker7: '0'
+    marker8: '0'
+    marker9: '0'
+    name: '""'
+    nconnections: '1'
+    size: '1024'
+    style1: '0'
+    style10: '0'
+    style2: '0'
+    style3: '0'
+    style4: '0'
+    style5: '0'
+    style6: '0'
+    style7: '0'
+    style8: '0'
+    style9: '0'
+    tr_chan: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: complex
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    xmax: '2'
+    xmin: '-2'
+    ymax: '2'
+    ymin: '-2'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1440, 476.0]
+    rotation: 180
+    state: true
+
+connections:
+- [blocks_complex_to_float_0, '0', blocks_float_to_complex_0, '0']
+- [blocks_complex_to_float_0, '1', blocks_delay_0, '0']
+- [blocks_delay_0, '0', blocks_float_to_complex_0, '1']
+- [blocks_file_source_0, '0', blocks_file_sink_1_0, '0']
+- [blocks_file_source_0, '0', low_pass_filter_0, '0']
+- [blocks_float_to_complex_0, '0', digital_costas_loop_cc_0, '0']
+- [blocks_multiply_const_vxx_0, '0', epy_block_0, '0']
+- [blocks_repack_bits_bb_0, '0', blocks_file_sink_1_1, '0']
+- [blocks_repack_bits_bb_0, '0', blocks_stream_to_tagged_stream_1, '0']
+- [blocks_stream_to_tagged_stream_1, '0', blocks_file_sink_0, '0']
+- [digital_constellation_soft_decoder_cf_0, '0', blocks_multiply_const_vxx_0, '0']
+- [digital_costas_loop_cc_0, '0', digital_constellation_soft_decoder_cf_0, '0']
+- [digital_costas_loop_cc_0, '0', qtgui_const_sink_x_0, '0']
+- [digital_pfb_clock_sync_xxx_0, '0', blocks_complex_to_float_0, '0']
+- [digital_pfb_clock_sync_xxx_0, '0', blocks_file_sink_1, '0']
+- [epy_block_0, '0', blocks_repack_bits_bb_0, '0']
+- [low_pass_filter_0, '0', digital_pfb_clock_sync_xxx_0, '0']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.7.0

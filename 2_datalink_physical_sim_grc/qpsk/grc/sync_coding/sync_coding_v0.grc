@@ -1,0 +1,1662 @@
+options:
+  parameters:
+    author: ''
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: sync_coding_v0
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Not titled yet
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: ASM_BYTES
+  id: variable
+  parameters:
+    comment: ASM = 0x1A CF FC 1D (4 bytes)
+    value: len(ASM_MARKER)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [800, 12.0]
+    rotation: 0
+    state: enabled
+- name: ASM_MARKER
+  id: variable
+  parameters:
+    comment: ''
+    value: (0x1A, 0xCF, 0xFC, 0x1D)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [664, 12.0]
+    rotation: 0
+    state: enabled
+- name: BYTES_PER_TM_FRAME
+  id: variable
+  parameters:
+    comment: ''
+    value: 223 * I_RS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [192, 12.0]
+    rotation: 0
+    state: enabled
+- name: CADU_RS_ASM_BYTES
+  id: variable
+  parameters:
+    comment: ''
+    value: RS_BYTES + ASM_BYTES
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [288, 92.0]
+    rotation: 0
+    state: enabled
+- name: DATA_RATE_BPS
+  id: variable
+  parameters:
+    comment: ''
+    value: (Rs*k*(1/r))
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [272, 236.0]
+    rotation: 0
+    state: enabled
+- name: FILE_BYTES
+  id: variable
+  parameters:
+    comment: ''
+    value: __import__('os').path.getsize(FILE_PATH)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [200, 172.0]
+    rotation: 0
+    state: enabled
+- name: FILE_PATH
+  id: variable
+  parameters:
+    comment: ''
+    value: '"/home/dogg/Downloads/tm_stagin_grc/qpsk/data/SPPencaps_CFDP_metadata_tx.bin"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [24, 172.0]
+    rotation: 0
+    state: true
+- name: HEAD_SPACING
+  id: variable
+  parameters:
+    comment: ''
+    value: BYTES_PER_TM_FRAME * N_FRAMES
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [480, 172.0]
+    rotation: 0
+    state: enabled
+- name: I_RS
+  id: variable
+  parameters:
+    comment: "RS interleave depth (because 223 \xD7 5 = 1115)"
+    value: '5'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [344, 12.0]
+    rotation: 0
+    state: enabled
+- name: K
+  id: variable
+  parameters:
+    comment: ''
+    value: '7'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [896, 12.0]
+    rotation: 0
+    state: enabled
+- name: N_FRAMES
+  id: variable
+  parameters:
+    comment: ''
+    value: (FILE_BYTES + SPP_LEN - 1) // SPP_LEN
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [384, 172.0]
+    rotation: 0
+    state: enabled
+- name: POST_CONV_BITS
+  id: variable
+  parameters:
+    comment: ''
+    value: CADU_RS_ASM_BYTES *8*(1/r)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [576, 92.0]
+    rotation: 0
+    state: enabled
+- name: POST_CONV_BYTES
+  id: variable
+  parameters:
+    comment: ''
+    value: POST_CONV_BITS/8
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [440, 92.0]
+    rotation: 0
+    state: enabled
+- name: RAND_SEED_ALL_ONES
+  id: variable
+  parameters:
+    comment: ''
+    value: '0x7FFF'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [728, 92.0]
+    rotation: 0
+    state: enabled
+- name: RS_BYTES
+  id: variable
+  parameters:
+    comment: ''
+    value: 255 * I_RS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [192, 92.0]
+    rotation: 0
+    state: enabled
+- name: Rs
+  id: variable
+  parameters:
+    comment: ''
+    value: '250000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [24, 236.0]
+    rotation: 0
+    state: enabled
+- name: SPP_LEN
+  id: variable
+  parameters:
+    comment: ''
+    value: FILE_BYTES
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [296, 172.0]
+    rotation: 0
+    state: true
+- name: TM_BODY_LEN
+  id: variable
+  parameters:
+    comment: ''
+    value: BYTES_PER_TM_FRAME - TM_HDR_LEN
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [520, 12.0]
+    rotation: 0
+    state: enabled
+- name: TM_HDR_LEN
+  id: variable
+  parameters:
+    comment: ''
+    value: '6'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [416, 12.0]
+    rotation: 0
+    state: enabled
+- name: k
+  id: variable
+  parameters:
+    comment: ''
+    value: '2'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [112, 236.0]
+    rotation: 0
+    state: enabled
+- name: r
+  id: variable
+  parameters:
+    comment: ''
+    value: 1/2
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [184, 236.0]
+    rotation: 0
+    state: enabled
+- name: blocks_file_sink_0
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Downloads/tm_stagin_grc/qpsk/data/art/cadu_v0.bin
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [24, 780.0]
+    rotation: 180
+    state: enabled
+- name: blocks_file_sink_0_0
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: tm_out
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Downloads/tm_stagin_grc/qpsk/data/art/tm_out.bin
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [572.0, 352]
+    rotation: 90
+    state: enabled
+- name: blocks_file_sink_0_0_0
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: rs_out
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Downloads/tm_stagin_grc/qpsk/data/art/rs_out.bin
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1020.0, 920]
+    rotation: 270
+    state: enabled
+- name: blocks_file_sink_0_0_0_0
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: rand_out
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Downloads/tm_stagin_grc/qpsk/data/art/rand_out.bin
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1092.0, 368]
+    rotation: 90
+    state: enabled
+- name: blocks_file_sink_0_0_0_2
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: conv_out
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Downloads/tm_stagin_grc/qpsk/data/art/conv_out.bin
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [396.0, 912]
+    rotation: 270
+    state: enabled
+- name: blocks_file_sink_0_0_1
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: tag_out
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Downloads/tm_stagin_grc/qpsk/data/art/tag_out.bin
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [284.0, 352]
+    rotation: 90
+    state: enabled
+- name: blocks_file_sink_0_1
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: asm_out
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Downloads/tm_stagin_grc/qpsk/data/art/asm_out.bin
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [668.0, 912]
+    rotation: 270
+    state: enabled
+- name: blocks_file_source_0
+  id: blocks_file_source
+  parameters:
+    affinity: ''
+    alias: ''
+    begin_tag: pmt.PMT_NIL
+    comment: ''
+    file: /home/dogg/Downloads/tm_stagin_grc/qpsk/data/SPPencaps_CFDP_metadata_tx.bin
+    length: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    repeat: 'True'
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [32, 524.0]
+    rotation: 0
+    state: enabled
+- name: blocks_throttle2_0
+  id: blocks_throttle2
+  parameters:
+    affinity: ''
+    alias: throttle_datalink
+    comment: ''
+    ignoretag: 'True'
+    limit: auto
+    maximum: '0.1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samples_per_second: DATA_RATE_BPS
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [224, 788.0]
+    rotation: 180
+    state: enabled
+- name: epy_block_0
+  id: epy_block
+  parameters:
+    _source_code: "# tm_framer_ccsds_epy.py\nimport numpy as np\nimport pmt\nfrom\
+      \ gnuradio import gr\n\nclass blk(gr.basic_block):\n    \"\"\"\n    CCSDS TM\
+      \ Transfer Frame framer (packetized mode, SyncFlag=0).\n    In : uchar stream,\
+      \ tagged per Space Packet (len_tag_key = SPP length in BYTES)\n    Out: uchar\
+      \ stream, fixed-length TM frames (len_tag_key = frame_len)\n\n    \u2022 6B\
+      \ Primary Header: TFVN/SCID/VCID/OCF + MC/VC counters + Data Field Status\n\
+      \    \u2022 Data Field Status (packetized): SyncFlag=0, FHP computed per frame\n\
+      \      - FHP = 0..TFDF_len-1 if a packet header starts in this TFDF\n      -\
+      \ FHP = 0x7FF if the frame contains only packet continuation bytes\n      -\
+      \ (Optional) 0x7FE if Only-Idle-Data (if emit_idle_when_empty=True and no SPPs)\n\
+      \    \u2022 Packs multiple SPPs if they fit; segments across frames when needed\n\
+      \    \u2022 Optional FECF (CRC-16-IBM) appended after TFDF when include_fecf=True\n\
+      \    \u2022 Maintains Master/Virtual Channel frame counters (mod-256)\n\n  \
+      \  Parameters\n      scid: 0..1023 (10b)\n      vcid: 0..7    (3b)\n      ocf_present:\
+      \ bool (sets OCF flag in header only; no OCF bytes are added)\n      frame_len:\
+      \ total TM frame length in bytes (header + TFDF [+ FECF])\n      len_tag_key:\
+      \ tag name for lengths (default \"packet_len\")\n      include_fecf: append\
+      \ CRC-16 FECF (True/False)\n      idle_fill: byte used for idle padding if emit_idle_when_empty=True\n\
+      \      emit_idle_when_empty: when True and no SPP available, send OID frames\
+      \ (FHP=0x7FE)\n    \"\"\"\n    def __init__(self,\n                 scid=0,\
+      \ vcid=0, ocf_present=False,\n                 frame_len=1115,\n           \
+      \      len_tag_key=\"packet_len\",\n                 include_fecf=False,\n \
+      \                idle_fill=0x55,\n                 emit_idle_when_empty=False):\n\
+      \        gr.basic_block.__init__(self,\n            name=\"tm_framer_ccsds\"\
+      ,\n            in_sig=[np.uint8],\n            out_sig=[np.uint8],\n       \
+      \ )\n        # ---- config ----\n        self.scid  = int(scid) & 0x3FF\n  \
+      \      self.vcid  = int(vcid) & 0x7\n        self.ocf_present = bool(ocf_present)\n\
+      \        self.len_key_str = str(len_tag_key)\n        self.len_key = pmt.intern(self.len_key_str)\n\
+      \        self.include_fecf = bool(include_fecf)\n        self.emit_idle = bool(emit_idle_when_empty)\n\
+      \        self.idle_fill = int(idle_fill) & 0xFF\n\n        # lengths\n     \
+      \   self.header_len = 6\n        self.fecf_len   = 2 if self.include_fecf else\
+      \ 0\n        self.frame_len  = int(frame_len)\n        assert self.frame_len\
+      \ >= self.header_len + self.fecf_len + 1, \"frame_len too small\"\n        self.tfdf_len\
+      \   = self.frame_len - self.header_len - self.fecf_len\n\n        # counters\n\
+      \        self.mc_cnt = 0\n        self.vc_cnt = 0\n\n        # input buffering\
+      \ / queues\n        self._inbuf = bytearray()\n        self._pending_tags =\
+      \ []  # (rel_offset, spp_len)\n        self._spp_queue = []     # dicts: { 'data':\
+      \ bytearray, 'pos': 0, 'len': L }\n        self._cur_pkt = None     # currently-being-segmented\
+      \ packet\n\n        # we re-emit only our own frame length tags\n        self.set_tag_propagation_policy(gr.TPP_DONT)\n\
+      \n    # --------------- CRC-16-IBM (FECF) ----------------\n    @staticmethod\n\
+      \    def _crc16_ibm(data, init=0xFFFF):\n        crc = init\n        for b in\
+      \ data:\n            crc ^= (b << 8) & 0xFFFF\n            for _ in range(8):\n\
+      \                if crc & 0x8000:\n                    crc = ((crc << 1) ^ 0x1021)\
+      \ & 0xFFFF\n                else:\n                    crc = (crc << 1) & 0xFFFF\n\
+      \        return crc & 0xFFFF\n\n    # --------------- Primary Header packer\
+      \ ---------------\n    def _pack_primary_header(self, fhp, sync_flag=0, sec_hdr_flag=0,\n\
+      \                             pkt_order_flag=0, seg_len_id=0):\n        \"\"\
+      \"\n        16 bits: TFVN(2)=0, SCID(10), VCID(3), OCF(1)\n        8  bits:\
+      \ MC frame count\n        8  bits: VC frame count\n        16 bits: Data Field\
+      \ Status: [SecHdr(1) Sync(1) PktOrd(1) SegLen(2) FHP(11)]\n        \"\"\"\n\
+      \        tfvn = 0\n        word0 = ((tfvn & 0x3) << 14) | ((self.scid & 0x3FF)\
+      \ << 4) | ((self.vcid & 0x7) << 1) | (1 if self.ocf_present else 0)\n      \
+      \  b0 = (word0 >> 8) & 0xFF\n        b1 = (word0 >> 0) & 0xFF\n\n        dfs\
+      \ = ((sec_hdr_flag & 1) << 15) \\\n            | ((sync_flag   & 1) << 14) \\\
+      \n            | ((pkt_order_flag & 1) << 13) \\\n            | ((seg_len_id\
+      \ & 0x3) << 11) \\\n            | (fhp & 0x7FF)\n        b4 = (dfs >> 8) & 0xFF\n\
+      \        b5 = (dfs >> 0) & 0xFF\n\n        hdr = bytearray(6)\n        hdr[0]\
+      \ = b0; hdr[1] = b1\n        hdr[2] = self.mc_cnt & 0xFF\n        hdr[3] = self.vc_cnt\
+      \ & 0xFF\n        hdr[4] = b4; hdr[5] = b5\n        return bytes(hdr)\n\n  \
+      \  def _advance_counters(self):\n        self.mc_cnt = (self.mc_cnt + 1) & 0xFF\n\
+      \        self.vc_cnt = (self.vc_cnt + 1) & 0xFF\n\n    # --------------- Input\
+      \ tag handling ---------------\n    def _collect_spp_tags(self, n_input):\n\
+      \        in0 = 0\n        nread = self.nitems_read(in0)\n        tags = self.get_tags_in_range(in0,\
+      \ nread, nread + n_input, self.len_key)\n        if not tags:\n            return\n\
+      \        tags = sorted(tags, key=lambda t: int(t.offset))\n        for t in\
+      \ tags:\n            if not pmt.is_integer(t.value): continue\n            L\
+      \ = int(pmt.to_long(t.value))\n            if L <= 0: continue\n           \
+      \ rel = int(t.offset - nread)\n            self._pending_tags.append((rel, L))\n\
+      \n    # --------------- Work ---------------\n    def general_work(self, input_items,\
+      \ output_items):\n        inp = input_items[0]\n        out = output_items[0]\n\
+      \        n_in, n_out = len(inp), len(out)\n        if n_out < self.frame_len:\n\
+      \            return 0\n\n        produced = 0\n\n        # Ingest bytes and\
+      \ discover new SPP starts in this call\n        if n_in:\n            self._inbuf\
+      \ += bytes(inp)\n            self._collect_spp_tags(n_in)\n\n        # Carve\
+      \ complete SPPs out of _inbuf into _spp_queue\n        while self._pending_tags:\n\
+      \            rel_off, L = self._pending_tags[0]\n            if rel_off < 0:\n\
+      \                # tag before buffer head; drop it (shouldn't happen with sane\
+      \ upstream)\n                self._pending_tags.pop(0)\n                continue\n\
+      \            if len(self._inbuf) < rel_off + L:\n                break  # wait\
+      \ for more bytes\n            pkt = bytes(self._inbuf[rel_off:rel_off+L])\n\
+      \            # remove everything up to end-of-packet to keep indices simple\n\
+      \            del self._inbuf[:rel_off+L]\n            # adjust remaining tags\n\
+      \            self._pending_tags = [(off - (rel_off+L), l) for (off, l) in self._pending_tags[1:]]\n\
+      \            # queue SPP\n            self._spp_queue.append({'data': bytearray(pkt),\
+      \ 'pos': 0, 'len': L})\n\n        # Assemble as many full frames as we have\
+      \ space for\n        while n_out - produced >= self.frame_len:\n           \
+      \ tfdf = bytearray(self.tfdf_len)\n            cursor = 0\n            header_starts\
+      \ = []  # offsets of SPP header starts within this TFDF\n\n            # 1)\
+      \ If continuing a split packet, place its continuation first\n            if\
+      \ self._cur_pkt is not None:\n                pkt = self._cur_pkt\n        \
+      \        rem = pkt['len'] - pkt['pos']\n                take = min(rem, self.tfdf_len\
+      \ - cursor)\n                if take > 0:\n                    tfdf[cursor:cursor+take]\
+      \ = pkt['data'][pkt['pos']:pkt['pos']+take]\n                    pkt['pos']\
+      \ += take\n                    cursor += take\n                if pkt['pos']\
+      \ >= pkt['len']:\n                    self._cur_pkt = None  # finished this\
+      \ packet\n\n            # 2) Place as many *new* SPPs as fit; record each header\
+      \ start\n            while cursor < self.tfdf_len and self._spp_queue:\n   \
+      \             pkt = self._spp_queue[0]\n                header_starts.append(cursor)\
+      \  # a new packet header starts here\n                L = pkt['len']\n     \
+      \           room = self.tfdf_len - cursor\n                if L <= room:\n \
+      \                   tfdf[cursor:cursor+L] = pkt['data']\n                  \
+      \  cursor += L\n                    self._spp_queue.pop(0)\n               \
+      \ else:\n                    # split across frames\n                    take\
+      \ = room\n                    if take > 0:\n                        tfdf[cursor:cursor+take]\
+      \ = pkt['data'][:take]\n                        pkt['pos'] = take\n        \
+      \                self._cur_pkt = pkt\n                        self._spp_queue.pop(0)\n\
+      \                    cursor = self.tfdf_len\n                    break\n\n \
+      \           # 3) If there is still space and no data, optionally emit Only-Idle-Data\n\
+      \            only_idle = False\n            if cursor < self.tfdf_len:\n   \
+      \             if self.emit_idle and not header_starts and self._cur_pkt is None\
+      \ and not self._spp_queue:\n                    tfdf[cursor:self.tfdf_len] =\
+      \ bytes([self.idle_fill]) * (self.tfdf_len - cursor)\n                    only_idle\
+      \ = True\n                else:\n                    # leave zeros (lab mode);\
+      \ production systems should prefer idle\n                    pass\n\n      \
+      \      # 4) Compute FHP\n            if only_idle:\n                fhp = 0x7FE\n\
+      \            else:\n                fhp = header_starts[0] if header_starts\
+      \ else 0x7FF\n\n            # 5) Build frame (header + TFDF [+ FECF])\n    \
+      \        hdr = self._pack_primary_header(fhp=fhp, sync_flag=0, sec_hdr_flag=0,\
+      \ pkt_order_flag=0, seg_len_id=0)\n            frame_wo_fecf = hdr + bytes(tfdf)\n\
+      \            if self.include_fecf:\n                crc = self._crc16_ibm(frame_wo_fecf)\n\
+      \                fecf = bytes([(crc >> 8) & 0xFF, crc & 0xFF])\n           \
+      \     frame = frame_wo_fecf + fecf\n            else:\n                frame\
+      \ = frame_wo_fecf\n\n            # 6) Output and tag\n            out[produced:produced+len(frame)]\
+      \ = np.frombuffer(frame, dtype=np.uint8)\n            self.add_item_tag(0, self.nitems_written(0)\
+      \ + produced, self.len_key, pmt.from_long(len(frame)))\n\n            # 7) advance\
+      \ counters and produced\n            self._advance_counters()\n            produced\
+      \ += len(frame)\n\n            # If we didn't actually place any data and also\
+      \ didn't permit idle,\n            # break to avoid emitting empty frames.\n\
+      \            if cursor == 0 and not self.emit_idle:\n                break\n\
+      \n        # Consume all input provided this call (we manage our own buffers)\n\
+      \        self.consume(0, n_in)\n        return produced\n\n"
+    affinity: ''
+    alias: tm_framer
+    comment: ''
+    emit_idle_when_empty: ''
+    frame_len: ''
+    idle_fill: ''
+    include_fecf: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    ocf_present: ''
+    scid: ''
+    vcid: ''
+  states:
+    _io_cache: "('tm_framer_ccsds', 'blk', [('scid', '0'), ('vcid', '0'), ('ocf_present',\
+      \ 'False'), ('frame_len', '1115'), ('len_tag_key', \"'packet_len'\"), ('include_fecf',\
+      \ 'False'), ('idle_fill', '85'), ('emit_idle_when_empty', 'False')], [('0',\
+      \ 'byte', 1)], [('0', 'byte', 1)], '\\n    CCSDS TM Transfer Frame framer (packetized\
+      \ mode, SyncFlag=0).\\n    In : uchar stream, tagged per Space Packet (len_tag_key\
+      \ = SPP length in BYTES)\\n    Out: uchar stream, fixed-length TM frames (len_tag_key\
+      \ = frame_len)\\n\\n    \u2022 6B Primary Header: TFVN/SCID/VCID/OCF + MC/VC\
+      \ counters + Data Field Status\\n    \u2022 Data Field Status (packetized):\
+      \ SyncFlag=0, FHP computed per frame\\n      - FHP = 0..TFDF_len-1 if a packet\
+      \ header starts in this TFDF\\n      - FHP = 0x7FF if the frame contains only\
+      \ packet continuation bytes\\n      - (Optional) 0x7FE if Only-Idle-Data (if\
+      \ emit_idle_when_empty=True and no SPPs)\\n    \u2022 Packs multiple SPPs if\
+      \ they fit; segments across frames when needed\\n    \u2022 Optional FECF (CRC-16-IBM)\
+      \ appended after TFDF when include_fecf=True\\n    \u2022 Maintains Master/Virtual\
+      \ Channel frame counters (mod-256)\\n\\n    Parameters\\n      scid: 0..1023\
+      \ (10b)\\n      vcid: 0..7    (3b)\\n      ocf_present: bool (sets OCF flag\
+      \ in header only; no OCF bytes are added)\\n      frame_len: total TM frame\
+      \ length in bytes (header + TFDF [+ FECF])\\n      len_tag_key: tag name for\
+      \ lengths (default \"packet_len\")\\n      include_fecf: append CRC-16 FECF\
+      \ (True/False)\\n      idle_fill: byte used for idle padding if emit_idle_when_empty=True\\\
+      n      emit_idle_when_empty: when True and no SPP available, send OID frames\
+      \ (FHP=0x7FE)\\n    ', ['frame_len', 'idle_fill', 'include_fecf', 'ocf_present',\
+      \ 'scid', 'vcid'])"
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [472, 540.0]
+    rotation: 0
+    state: enabled
+- name: epy_block_1
+  id: epy_block
+  parameters:
+    _source_code: "import numpy as np\nfrom gnuradio import gr\nimport pmt\n\nclass\
+      \ blk(gr.basic_block):\n    \"\"\"\n    CCSDS TM byte-wise randomizer / de-randomizer.\n\
+      \n    - LFSR: x^15 + x^14 + 1 (15-bit), default seed 0x7FFF (all ones)\n   \
+      \ - Restarts PN at each frame, where frame boundaries are marked by a\n    \
+      \  length tag (e.g., \"packet_len\") giving the frame length in BYTES.\n   \
+      \ - Symmetric XOR \u21D2 works for randomize *and* derandomize.\n\n    Params:\n\
+      \      len_tag_key=\"packet_len\", seed=0x7FFF, restart_per_frame=True, enabled=True\n\
+      \    \"\"\"\n\n    def __init__(self, len_tag_key=\"packet_len\", seed=0x7FFF,\n\
+      \                 restart_per_frame=True, enabled=True):\n        gr.basic_block.__init__(self,\n\
+      \            name=\"ccsds_tm_randomizer\",\n            in_sig=[np.uint8],\n\
+      \            out_sig=[np.uint8])\n\n        # --- Params\n        self.len_tag_key_str\
+      \ = str(len_tag_key)\n        self.len_tag_key = pmt.intern(self.len_tag_key_str)\n\
+      \        self.seed = int(seed) & 0x7FFF\n        self.restart_per_frame = bool(restart_per_frame)\n\
+      \        self.enabled = bool(enabled)\n\n        # --- State\n        self._lfsr\
+      \ = self.seed\n        self._frame_bytes_left = 0\n\n        # IMPORTANT: don't\
+      \ auto-propagate tags; we will forward/re-emit explicitly\n        self.set_tag_propagation_policy(gr.TPP_DONT)\n\
+      \n    # ---- PN generator (CCSDS 15-bit LFSR) ----\n    @staticmethod\n    def\
+      \ _step_lfsr(state):\n        # taps at bit14 and bit13 (0-based, 15-bit register\
+      \ [14..0])\n        new_bit = ((state >> 14) ^ (state >> 13)) & 0x1\n      \
+      \  state = ((state << 1) & 0x7FFF) | new_bit\n        return state\n\n    def\
+      \ _next_pn_byte(self):\n        out_byte = 0\n        for _ in range(8):\n \
+      \           pn_bit = (self._lfsr >> 14) & 0x1   # MSB before stepping\n    \
+      \        out_byte = ((out_byte << 1) | pn_bit) & 0xFF\n            self._lfsr\
+      \ = self._step_lfsr(self._lfsr)\n        return out_byte\n\n    def _reset_pn(self):\n\
+      \        self._lfsr = self.seed\n\n    # ---- Tag forwarding helper ----\n \
+      \   def _forward_tags(self, n_input, produced):\n        \"\"\"Forward all input\
+      \ tags EXCEPT the length tag (we re-emit it).\"\"\"\n        in0 = 0\n     \
+      \   nread  = self.nitems_read(in0)\n        out_hd = self.nitems_written(in0)\
+      \ + produced\n\n        for t in self.get_tags_in_range(in0, nread, nread +\
+      \ n_input):\n            if pmt.equal(t.key, self.len_tag_key):\n          \
+      \      continue  # we'll re-emit a clean length tag at frame start\n       \
+      \     rel = t.offset - nread\n            self.add_item_tag(0, out_hd + rel,\
+      \ t.key, t.value)\n\n    # ---- Detect incoming length tags within current window\
+      \ ----\n    def _consume_length_tags(self, n_input):\n        \"\"\"Return sorted\
+      \ list of (rel_offset, frame_len) for new frames in-window.\"\"\"\n        in0\
+      \ = 0\n        nread = self.nitems_read(in0)\n        found = []\n\n       \
+      \ # Ask GNU Radio to filter by key on our behalf\n        for t in self.get_tags_in_range(in0,\
+      \ nread, nread + n_input, self.len_tag_key):\n            try:\n           \
+      \     L = int(pmt.to_long(t.value))\n            except Exception:\n       \
+      \         continue\n            if L > 0:\n                rel = t.offset -\
+      \ nread\n                found.append((rel, L))\n\n        found.sort(key=lambda\
+      \ x: x[0])\n        return found\n\n    def general_work(self, input_items,\
+      \ output_items):\n        inp = input_items[0]\n        out = output_items[0]\n\
+      \n        n_in  = len(inp)\n        n_out = len(out)\n        if n_in == 0 or\
+      \ n_out == 0:\n            return 0\n\n        produced = 0\n        consumed\
+      \ = 0\n\n        # Forward non-length tags with corrected offsets\n        self._forward_tags(n_in,\
+      \ produced=0)\n\n        # Collect any new frame-start tags appearing in this\
+      \ call\n        starts = self._consume_length_tags(n_in)\n        cursor = 0\
+      \  # bytes already handled from 'inp' in this call\n\n        def process_chunk(chunk_len):\n\
+      \            nonlocal produced, consumed, cursor\n            if chunk_len <=\
+      \ 0:\n                return\n            n = min(chunk_len, n_out - produced)\n\
+      \            if n <= 0:\n                return\n\n            if not self.enabled\
+      \ or self._frame_bytes_left <= 0:\n                out[produced:produced+n]\
+      \ = inp[cursor:cursor+n]\n            else:\n                to_rand = min(n,\
+      \ self._frame_bytes_left)\n                for i in range(to_rand):\n      \
+      \              out[produced+i] = inp[cursor+i] ^ self._next_pn_byte()\n    \
+      \            if n > to_rand:\n                    out[produced+to_rand:produced+n]\
+      \ = inp[cursor+to_rand:cursor+n]\n                self._frame_bytes_left -=\
+      \ to_rand\n\n            produced += n\n            consumed += n\n        \
+      \    cursor   += n\n\n        # Walk input; when we hit a new frame start, (re)seed\
+      \ and re-tag\n        for rel_off, frame_len in starts:\n            # bytes\
+      \ before the frame start (pass-through or continuing prior frame)\n        \
+      \    pre = rel_off - cursor\n            if pre > 0:\n                process_chunk(pre)\n\
+      \                if produced >= n_out:\n                    break\n\n      \
+      \      # Start a new frame exactly here\n            if self.restart_per_frame:\n\
+      \                self._reset_pn()\n            self._frame_bytes_left = frame_len\n\
+      \n            # Re-emit a clean length tag at the output head for this frame\n\
+      \            self.add_item_tag(0,\n                              self.nitems_written(0)\
+      \ + produced,\n                              self.len_tag_key,\n           \
+      \                   pmt.from_long(frame_len))\n\n            # processing continues;\
+      \ next process_chunk() will apply PN\n\n        # After handling all starts,\
+      \ process the remainder of input window\n        if produced < n_out and cursor\
+      \ < n_in:\n            process_chunk(n_in - cursor)\n\n        self.consume(0,\
+      \ consumed)\n        return produced\n\n"
+    affinity: ''
+    alias: tm_rand
+    comment: ''
+    enabled: 'True'
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    restart_per_frame: 'True'
+    seed: RAND_SEED_ALL_ONES
+  states:
+    _io_cache: "('ccsds_tm_randomizer', 'blk', [('len_tag_key', \"'packet_len'\"),\
+      \ ('seed', '32767'), ('restart_per_frame', 'True'), ('enabled', 'True')], [('0',\
+      \ 'byte', 1)], [('0', 'byte', 1)], '\\n    CCSDS TM byte-wise randomizer / de-randomizer.\\\
+      n\\n    - LFSR: x^15 + x^14 + 1 (15-bit), default seed 0x7FFF (all ones)\\n\
+      \    - Restarts PN at each frame, where frame boundaries are marked by a\\n\
+      \      length tag (e.g., \"packet_len\") giving the frame length in BYTES.\\\
+      n    - Symmetric XOR \u21D2 works for randomize *and* derandomize.\\n\\n   \
+      \ Params:\\n      len_tag_key=\"packet_len\", seed=0x7FFF, restart_per_frame=True,\
+      \ enabled=True\\n    ', ['enabled', 'len_tag_key', 'restart_per_frame', 'seed'])"
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [880, 532.0]
+    rotation: 0
+    state: enabled
+- name: epy_block_2
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nASM inserter for CCSDS CADU.\n\nInput : bytes (uchar),\
+      \ tagged stream with one length tag per frame (len_tag_key)\nOutput: bytes (uchar),\
+      \ same frame with ASM prepended; packet_len increased by len(ASM)\n\"\"\"\n\n\
+      import numpy as np\nimport pmt\nfrom gnuradio import gr\n\nclass blk(gr.basic_block):\n\
+      \    def __init__(self, len_tag_key=\"packet_len\", asm_word=(0x1A, 0xCF, 0xFC,\
+      \ 0x1D)):\n        gr.basic_block.__init__(self,\n            name=\"asm_inserter\"\
+      ,\n            in_sig=[np.uint8],\n            out_sig=[np.uint8],\n       \
+      \ )\n        self.len_key  = pmt.intern(str(len_tag_key))\n        # use your\
+      \ canvas variable; GRC will pass ASM_MARKER here\n        self.asm      = bytes(asm_word)\
+      \ if asm_word is not None else b\"\"\n        self.asm_len  = len(self.asm)\n\
+      \n        # We do not create headers or bodies here; we just insert ASM.\n\n\
+      \    def general_work(self, input_items, output_items):\n        inp = input_items[0]\n\
+      \        out = output_items[0]\n        n_in = len(inp)\n        if n_in ==\
+      \ 0:\n            return 0\n\n        n_read = self.nitems_read(0)\n\n     \
+      \   # Look for the first length tag in the current window\n        tags = self.get_tags_in_window(0,\
+      \ 0, n_in, self.len_key)\n        if not tags:\n            return 0\n\n   \
+      \     t = tags[0]\n        rel = int(t.offset - n_read)\n        if rel > 0:\n\
+      \            # Align to the tag (start of frame)\n            self.consume(0,\
+      \ rel)\n            return 0\n\n        # Length of the incoming frame payload\
+      \ (pre-ASM)\n        L_in = int(pmt.to_long(t.value))\n        if n_in < L_in:\n\
+      \            # wait for the whole frame to arrive\n            return 0\n\n\
+      \        L_out = L_in + self.asm_len  # <\u2014 THIS is the \u201C+4\u201D (or\
+      \ +len(ASM_MARKER))\n\n        if len(out) < L_out:\n            # need more\
+      \ output buffer\n            return 0\n\n        # write ASM then the original\
+      \ frame bytes\n        if self.asm_len:\n            out[:self.asm_len] = np.frombuffer(self.asm,\
+      \ dtype=np.uint8)\n        out[self.asm_len:self.asm_len+L_in] = inp[:L_in]\n\
+      \n        # Re-tag output with the new length\n        self.add_item_tag(0,\
+      \ self.nitems_written(0), self.len_key, pmt.from_long(L_out))\n\n        # Consume\
+      \ exactly the input frame\n        self.consume(0, L_in)\n        return L_out\n"
+    affinity: ''
+    alias: asm_ins
+    asm_word: ASM_MARKER
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('asm_inserter', 'blk', [('len_tag_key', "'packet_len'"), ('asm_word',
+      '(26, 207, 252, 29)')], [('0', 'byte', 1)], [('0', 'byte', 1)], '', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [784, 788.0]
+    rotation: 180
+    state: enabled
+- name: epy_block_3
+  id: epy_block
+  parameters:
+    K: K
+    _source_code: "import numpy as np\nfrom gnuradio import gr\nimport pmt\n\nclass\
+      \ blk(gr.sync_block):\n    \"\"\"\n    CCSDS convolutional encoder (K=7, r=1/2,\
+      \ generators 171/133 octal).\n    Input : BYTES with per-frame 'packet_len'\
+      \ tag (pre-FEC CADU: TM+ASM)\n    Output: BYTES with updated 'packet_len' tag\
+      \ (post-FEC CADU bytes)\n    Emits the output length tag exactly at the first\
+      \ encoded byte of each frame.\n    \"\"\"\n    def __init__(self,\n        \
+      \         len_tag_key=\"packet_len\",\n                 K=7,\n             \
+      \    gen0=0o171,\n                 gen1=0o133,\n                 msb_first=True,\n\
+      \                 reset_each_frame=True):\n        gr.sync_block.__init__(\n\
+      \            self,\n            name=\"ccsds_conv_k7_r12_epy\",\n          \
+      \  in_sig=[np.uint8],\n            out_sig=[np.uint8],\n        )\n        #\
+      \ Params\n        self.len_tag_key = str(len_tag_key)\n        self.len_key_sym\
+      \ = pmt.intern(self.len_tag_key)\n        self.K = int(K)\n        self.gen0\
+      \ = np.uint32(gen0)\n        self.gen1 = np.uint32(gen1)\n        self._mask\
+      \ = np.uint32((1 << self.K) - 1)\n        self.msb_first = bool(msb_first)\n\
+      \        self.reset_each_frame = bool(reset_each_frame)\n\n        # Internal\n\
+      \        self._inbuf = bytearray()\n        self._outbuf = bytearray()\n   \
+      \     self._frame_queue = []     # pending input frame lengths (bytes)\n   \
+      \     self._state = np.uint32(0)\n\n        # Tag scheduling for output\n  \
+      \      self._pending_out_frames = []  # list of encoded frame lengths (bytes)\n\
+      \        self._head_remaining = 0       # bytes remaining to write in current\
+      \ head frame\n\n        # We will re-emit only our packet_len; do not propagate\
+      \ all tags blindly\n        self.set_tag_propagation_policy(gr.TPP_DONT)\n\n\
+      \    # ---------- helpers ----------\n    @staticmethod\n    def _parity_u32(x):\n\
+      \        cnt = 0\n        while x:\n            x &= (x - 1)\n            cnt\
+      \ ^= 1\n        return cnt & 1\n\n    def _bytes_to_bits(self, b):\n       \
+      \ arr = np.frombuffer(bytes(b), dtype=np.uint8)\n        if self.msb_first:\n\
+      \            shifts = np.arange(7, -1, -1, dtype=np.uint8)\n        else:\n\
+      \            shifts = np.arange(0, 8, 1, dtype=np.uint8)\n        bits = ((arr[:,\
+      \ None] >> shifts[None, :]) & 1).astype(np.uint8)\n        return bits.reshape(-1)\n\
+      \n    def _bits_to_bytes(self, bits):\n        n = bits.size\n        pad =\
+      \ (8 - (n % 8)) % 8\n        if pad:\n            bits = np.concatenate([bits,\
+      \ np.zeros(pad, dtype=np.uint8)])\n        bits = bits.reshape(-1, 8)\n    \
+      \    if self.msb_first:\n            shifts = np.arange(7, -1, -1, dtype=np.uint8)\n\
+      \        else:\n            shifts = np.arange(0, 8, 1, dtype=np.uint8)\n  \
+      \      packed = (bits * (1 << shifts)).sum(axis=1).astype(np.uint8)\n      \
+      \  return bytes(packed)\n\n    def _conv_encode_bits(self, in_bits):\n     \
+      \   out = np.empty(in_bits.size * 2, dtype=np.uint8)\n        state = self._state\n\
+      \        mask = self._mask\n        g0 = self.gen0\n        g1 = self.gen1\n\
+      \        idx = 0\n        for b in in_bits:\n            state = ((state <<\
+      \ np.uint32(1)) | np.uint32(int(b & 1))) & mask\n            out[idx]   = self._parity_u32(int(state\
+      \ & g0))\n            out[idx+1] = self._parity_u32(int(state & g1))\n     \
+      \       idx += 2\n        if self.reset_each_frame:\n            self._state\
+      \ = np.uint32(0)\n        else:\n            self._state = state\n        return\
+      \ out\n\n    # ---------- input frame parsing ----------\n    def _enqueue_len_tags(self,\
+      \ ninput_items):\n        tags = self.get_tags_in_window(0, 0, ninput_items)\n\
+      \        for t in tags:\n            try:\n                key_str = pmt.symbol_to_string(t.key)\n\
+      \            except Exception:\n                continue\n            if key_str\
+      \ == self.len_tag_key and pmt.is_integer(t.value):\n                L = int(pmt.to_long(t.value))\n\
+      \                if L > 0:\n                    self._frame_queue.append(L)\n\
+      \n    def _process_frames_to_outbuf(self):\n        # Convert as many full frames\
+      \ as are available in _inbuf\n        while self._frame_queue:\n           \
+      \ need = self._frame_queue[0]\n            if len(self._inbuf) < need:\n   \
+      \             break\n            # consume one input frame\n            frame\
+      \ = self._inbuf[:need]\n            del self._inbuf[:need]\n            self._frame_queue.pop(0)\n\
+      \n            # bytes -> bits -> encode -> bytes\n            bits_in  = self._bytes_to_bits(frame)\n\
+      \            bits_out = self._conv_encode_bits(bits_in)\n            enc   \
+      \   = self._bits_to_bytes(bits_out)  # exactly 2*need bytes\n\n            #\
+      \ append to output buffer\n            start_new_frame = (self._head_remaining\
+      \ == 0 and len(self._pending_out_frames) == 0 and len(self._outbuf) == 0)\n\
+      \            self._outbuf += enc\n\n            # queue this encoded frame length\
+      \ for tag scheduling\n            self._pending_out_frames.append(len(enc))\n\
+      \            # Note: we don't emit the tag yet; we emit it when the first byte\
+      \ of this frame is written.\n\n    # ---------- work ----------\n    def work(self,\
+      \ input_items, output_items):\n        in0 = input_items[0]\n        out0 =\
+      \ output_items[0]\n\n        n_in = len(in0)\n        if n_in:\n           \
+      \ # ingest bytes and discover new frame tags\n            self._inbuf += bytes(in0)\n\
+      \            self._enqueue_len_tags(n_in)\n            self._process_frames_to_outbuf()\n\
+      \n        # nothing to output?\n        if not self._outbuf:\n            self.consume_each(n_in)\n\
+      \            return 0\n\n        ow = self.nitems_written(0)\n        space\
+      \ = len(out0)\n        produced = 0\n\n        # Before writing any bytes in\
+      \ this call, if we are at a frame boundary,\n        # emit the length tag at\
+      \ the current write head.\n        while space > 0 and self._outbuf:\n     \
+      \       if self._head_remaining == 0:\n                # Starting a new encoded\
+      \ frame on the output stream\n                if not self._pending_out_frames:\n\
+      \                    # Shouldn't happen, but guard anyway\n                \
+      \    break\n                self._head_remaining = self._pending_out_frames[0]\n\
+      \                # Emit the tag RIGHT HERE at the start boundary\n         \
+      \       self.add_item_tag(0, ow + produced, self.len_key_sym, pmt.from_long(self._head_remaining))\n\
+      \n            # write up to the remainder of this frame (or available space)\n\
+      \            chunk = min(space, self._head_remaining, len(self._outbuf))\n \
+      \           if chunk <= 0:\n                break\n\n            out0[produced:produced+chunk]\
+      \ = np.frombuffer(self._outbuf[:chunk], dtype=np.uint8)\n            del self._outbuf[:chunk]\n\
+      \n            produced += chunk\n            space    -= chunk\n           \
+      \ self._head_remaining -= chunk\n\n            if self._head_remaining == 0:\n\
+      \                # finished a frame; pop it\n                if self._pending_out_frames:\n\
+      \                    self._pending_out_frames.pop(0)\n                # loop\
+      \ continues; if there's still space and more frames queued,\n              \
+      \  # the next iteration will emit the next tag at the new boundary.\n\n    \
+      \    self.consume_each(n_in)\n        return produced\n"
+    affinity: ''
+    alias: conv_k7r12
+    comment: ''
+    gen0: 0o171
+    gen1: 0o133
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    msb_first: 'True'
+    reset_each_frame: 'True'
+  states:
+    _io_cache: '(''ccsds_conv_k7_r12_epy'', ''blk'', [(''len_tag_key'', "''packet_len''"),
+      (''K'', ''7''), (''gen0'', ''121''), (''gen1'', ''91''), (''msb_first'', ''True''),
+      (''reset_each_frame'', ''True'')], [(''0'', ''byte'', 1)], [(''0'', ''byte'',
+      1)], "\n    CCSDS convolutional encoder (K=7, r=1/2, generators 171/133 octal).\n    Input
+      : BYTES with per-frame ''packet_len'' tag (pre-FEC CADU: TM+ASM)\n    Output:
+      BYTES with updated ''packet_len'' tag (post-FEC CADU bytes)\n    Emits the output
+      length tag exactly at the first encoded byte of each frame.\n    ", [''K'',
+      ''gen0'', ''gen1'', ''len_tag_key'', ''msb_first'', ''reset_each_frame''])'
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [464, 756.0]
+    rotation: 180
+    state: enabled
+- name: epy_block_4
+  id: epy_block
+  parameters:
+    I: I_RS
+    _source_code: "\"\"\"\nCCSDS RS(255,223) encoder with symbol interleaving depth\
+      \ I (round-robin),\nfor TM frames already randomized. One input TM frame of\
+      \ length tm_len=223*I\nbecomes an interleaved RS codeblock of length 255*I.\n\
+      \nInput : bytes (uchar), tagged stream with len_tag_key = 223*I\nOutput: bytes\
+      \ (uchar), tagged stream with len_tag_key = 255*I\n\"\"\"\n\nimport numpy as\
+      \ np\nimport pmt\nfrom gnuradio import gr\n\nclass blk(gr.basic_block):\n  \
+      \  def __init__(self, len_tag_key=\"packet_len\", I=5, tm_len=1115):\n     \
+      \   gr.basic_block.__init__(self,\n            name=\"rs255_223_interleave_I\"\
+      ,\n            in_sig=[np.uint8],\n            out_sig=[np.uint8],\n       \
+      \ )\n        self.len_key = pmt.intern(str(len_tag_key))\n        self.I = int(I)\n\
+      \        self.tm_len = int(tm_len)\n\n        # --- RS(255,223) constants ---\n\
+      \        self.N = 255\n        self.K = 223\n        self.NPAR = self.N - self.K\
+      \  # 32 parity bytes\n\n        # Sanity check: input length must be 223*I\n\
+      \        if self.tm_len != self.K * self.I:\n            raise ValueError(f\"\
+      tm_len ({self.tm_len}) must equal 223*I ({self.K*self.I})\")\n\n        # Build\
+      \ GF(256) tables with primitive polynomial 0x11D\n        self._gf_init(prim=0x11D)\n\
+      \n        # Build generator polynomial g(x) = \u03A0_{i=1..NPAR} (x - \u03B1\
+      ^i)\n        # (Common RS(255,223) choice; for strict CCSDS compliance this\
+      \ matches practice for TM.)\n        self.gen = self._rs_generator(self.NPAR)\n\
+      \n    # ---------------- GF(256) helpers ----------------\n    def _gf_init(self,\
+      \ prim=0x11D):\n        self.gf_exp = np.zeros(512, dtype=np.uint8)\n      \
+      \  self.gf_log = np.zeros(256, dtype=np.int16) - 1\n        x = 1\n        for\
+      \ i in range(255):\n            self.gf_exp[i] = x\n            self.gf_log[x]\
+      \ = i\n            x <<= 1\n            if x & 0x100:\n                x ^=\
+      \ prim\n        # duplicate for fast wrap\n        self.gf_exp[255:510] = self.gf_exp[:255]\n\
+      \        self.gf_exp[510:] = self.gf_exp[:2]\n\n\n    def _gf_add(self, a, b):\
+      \  # = subtract\n        return a ^ b\n\n    def _gf_mul(self, a, b):\n    \
+      \    if a == 0 or b == 0:\n            return 0\n        return int(self.gf_exp[int(self.gf_log[a])\
+      \ + int(self.gf_log[b])])\n\n    def _poly_scale(self, p, x):\n        if x\
+      \ == 0:\n            return np.zeros_like(p)\n        return np.array([self._gf_mul(int(c),\
+      \ x) for c in p], dtype=np.uint8)\n\n    def _poly_add(self, p, q):\n      \
+      \  # align lengths (MSB first)\n        if len(p) < len(q):\n            p =\
+      \ np.pad(p, (len(q)-len(p), 0), constant_values=0)\n        elif len(q) < len(p):\n\
+      \            q = np.pad(q, (len(p)-len(q), 0), constant_values=0)\n        return\
+      \ np.array([self._gf_add(int(a), int(b)) for a, b in zip(p, q)], dtype=np.uint8)\n\
+      \n    def _rs_generator(self, nsym):\n        g = np.array([1], dtype=np.uint8)\n\
+      \        for i in range(1, nsym+1):\n            # multiply by (x - \u03B1^i)\n\
+      \            term = np.array([1, self.gf_exp[i]], dtype=np.uint8)\n        \
+      \    g = self._poly_mul(g, term)\n        return g\n\n    def _poly_mul(self,\
+      \ p, q):\n        r = np.zeros(len(p)+len(q)-1, dtype=np.uint8)\n        for\
+      \ i, a in enumerate(p):\n            if a == 0: continue\n            for j,\
+      \ b in enumerate(q):\n                if b == 0: continue\n                r[i+j]\
+      \ ^= self._gf_mul(int(a), int(b))\n        return r\n\n    def _rs_encode_223_255(self,\
+      \ data):\n        \"\"\"Return parity bytes for a 223-byte message.\"\"\"\n\
+      \        if len(data) != self.K:\n            raise ValueError(\"RS encoder\
+      \ expects exactly 223 data bytes\")\n        # remainder of x^(NPAR) * data(x)\
+      \ divided by g(x)\n        rem = np.zeros(self.NPAR, dtype=np.uint8)\n     \
+      \   for d in data:\n            coef = d ^ rem[0]\n            # shift left\
+      \ by 1 (drop MSB), append 0\n            rem = np.concatenate([rem[1:], np.array([0],\
+      \ dtype=np.uint8)])\n            if coef != 0:\n                # rem = rem\
+      \ ^ (coef * g[1..])\n                for j in range(self.NPAR):\n          \
+      \          rem[j] ^= self._gf_mul(int(self.gen[j+1]), int(coef))\n        return\
+      \ bytes(rem)  # parity\n\n    # -------------- Work: one TM frame \u2192 I interleaved\
+      \ RS codewords --------------\n    def general_work(self, input_items, output_items):\n\
+      \        inp = input_items[0]\n        out = output_items[0]\n        n_in =\
+      \ len(inp)\n        if n_in == 0 or len(out) == 0:\n            return 0\n\n\
+      \        n_read = self.nitems_read(0)\n        tags = self.get_tags_in_window(0,\
+      \ 0, n_in, self.len_key)\n        if not tags:\n            return 0\n\n   \
+      \     t = tags[0]\n        rel = int(t.offset - n_read)\n        if rel > 0:\n\
+      \            self.consume(0, rel)\n            return 0\n\n        L = int(pmt.to_long(t.value))\n\
+      \        if L < self.tm_len or n_in < self.tm_len:\n            # need the full\
+      \ TM frame\n            return 0\n\n        # Take exactly one TM frame\n  \
+      \      tm = np.array(inp[:self.tm_len], dtype=np.uint8)\n\n        # Demultiplex\
+      \ into I branches (round-robin)\n        # branch j gets bytes tm[j], tm[j+I],\
+      \ tm[j+2I], ... total 223 each\n        branches = []\n        for j in range(self.I):\n\
+      \            branch = tm[j::self.I]\n            if len(branch) != self.K:\n\
+      \                # Should not happen if tm_len == 223*I\n                branch\
+      \ = np.pad(branch, (0, self.K - len(branch)), constant_values=0)\n         \
+      \   branches.append(np.array(branch, dtype=np.uint8))\n\n        # RS encode\
+      \ each branch and form full 255-byte codewords\n        codewords = []\n   \
+      \     for j in range(self.I):\n            parity = self._rs_encode_223_255(branches[j])\n\
+      \            cw = bytes(branches[j].tolist()) + parity  # 223 + 32\n       \
+      \     codewords.append(np.frombuffer(cw, dtype=np.uint8))\n\n        # Multiplex\
+      \ interleaver output: cw0[0], cw1[0], ..., cw{I-1}[0], cw0[1], ...\n       \
+      \ out_len = self.N * self.I  # 255*I\n        if len(out) < out_len:\n     \
+      \       return 0\n\n        write_idx = 0\n        for sym_idx in range(self.N):\n\
+      \            for j in range(self.I):\n                out[write_idx] = codewords[j][sym_idx]\n\
+      \                write_idx += 1\n\n        # Emit new packet_len tag (255*I)\
+      \ at output head\n        self.add_item_tag(0, self.nitems_written(0), self.len_key,\
+      \ pmt.from_long(out_len))\n\n        # Consume exactly one TM frame worth of\
+      \ input\n        self.consume(0, self.tm_len)\n        return out_len\n"
+    affinity: ''
+    alias: rs_I
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    tm_len: BYTES_PER_TM_FRAME
+  states:
+    _io_cache: ('rs255_223_interleave_I', 'blk', [('len_tag_key', "'packet_len'"),
+      ('I', '5'), ('tm_len', '1115')], [('0', 'byte', 1)], [('0', 'byte', 1)], '',
+      ['I', 'tm_len'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1140.0, 656]
+    rotation: 270
+    state: enabled
+- name: epy_block_5
+  id: epy_block
+  parameters:
+    _source_code: "import numpy as np, pmt\nfrom gnuradio import gr\n\nclass blk(gr.basic_block):\n\
+      \    def __init__(self, len_tag_key=\"packet_len\"):\n        gr.basic_block.__init__(self,\
+      \ name=\"len_meter_ts\",\n                                in_sig=[np.uint8],\
+      \ out_sig=[np.float32])\n        self.len_key = pmt.intern(len_tag_key)\n\n\
+      \    def general_work(self, input_items, output_items):\n        inp, out =\
+      \ input_items[0], output_items[0]\n        n = len(inp)\n        if n == 0 or\
+      \ len(out) == 0:\n            return 0\n        n_read = self.nitems_read(0)\n\
+      \        tags = self.get_tags_in_window(0, 0, n, self.len_key)\n        if not\
+      \ tags:\n            return 0\n        t = tags[0]\n        rel = int(t.offset\
+      \ - n_read)\n        if rel > 0:\n            self.consume(0, rel); \n     \
+      \       return 0\n        L = int(pmt.to_long(t.value))\n        if n < L: \
+      \ # wait for full frame in this window\n            return 0\n        out[0]\
+      \ = float(L)\n        self.consume(0, L)   # advance exactly one frame\n   \
+      \     return 1\n"
+    affinity: ''
+    alias: len_tm
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('len_meter_ts', 'blk', [('len_tag_key', "'packet_len'")], [('0', 'byte',
+      1)], [('0', 'float', 1)], '', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [668.0, 352]
+    rotation: 90
+    state: enabled
+- name: epy_block_5_0
+  id: epy_block
+  parameters:
+    _source_code: "import numpy as np, pmt\nfrom gnuradio import gr\n\nclass blk(gr.basic_block):\n\
+      \    def __init__(self, len_tag_key=\"packet_len\"):\n        gr.basic_block.__init__(self,\
+      \ name=\"len_meter_ts\",\n                                in_sig=[np.uint8],\
+      \ out_sig=[np.float32])\n        self.len_key = pmt.intern(len_tag_key)\n\n\
+      \    def general_work(self, input_items, output_items):\n        inp, out =\
+      \ input_items[0], output_items[0]\n        n = len(inp)\n        if n == 0 or\
+      \ len(out) == 0:\n            return 0\n        n_read = self.nitems_read(0)\n\
+      \        tags = self.get_tags_in_window(0, 0, n, self.len_key)\n        if not\
+      \ tags:\n            return 0\n        t = tags[0]\n        rel = int(t.offset\
+      \ - n_read)\n        if rel > 0:\n            self.consume(0, rel); \n     \
+      \       return 0\n        L = int(pmt.to_long(t.value))\n        if n < L: \
+      \ # wait for full frame in this window\n            return 0\n        out[0]\
+      \ = float(L)\n        self.consume(0, L)   # advance exactly one frame\n   \
+      \     return 1\n"
+    affinity: ''
+    alias: len_rand
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('len_meter_ts', 'blk', [('len_tag_key', "'packet_len'")], [('0', 'byte',
+      1)], [('0', 'float', 1)], '', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1188.0, 376]
+    rotation: 90
+    state: enabled
+- name: epy_block_5_1
+  id: epy_block
+  parameters:
+    _source_code: "import numpy as np, pmt\nfrom gnuradio import gr\n\nclass blk(gr.basic_block):\n\
+      \    def __init__(self, len_tag_key=\"packet_len\"):\n        gr.basic_block.__init__(self,\
+      \ name=\"len_meter_ts\",\n                                in_sig=[np.uint8],\
+      \ out_sig=[np.float32])\n        self.len_key = pmt.intern(len_tag_key)\n\n\
+      \    def general_work(self, input_items, output_items):\n        inp, out =\
+      \ input_items[0], output_items[0]\n        n = len(inp)\n        if n == 0 or\
+      \ len(out) == 0:\n            return 0\n        n_read = self.nitems_read(0)\n\
+      \        tags = self.get_tags_in_window(0, 0, n, self.len_key)\n        if not\
+      \ tags:\n            return 0\n        t = tags[0]\n        rel = int(t.offset\
+      \ - n_read)\n        if rel > 0:\n            self.consume(0, rel); \n     \
+      \       return 0\n        L = int(pmt.to_long(t.value))\n        if n < L: \
+      \ # wait for full frame in this window\n            return 0\n        out[0]\
+      \ = float(L)\n        self.consume(0, L)   # advance exactly one frame\n   \
+      \     return 1\n"
+    affinity: ''
+    alias: len_rs
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('len_meter_ts', 'blk', [('len_tag_key', "'packet_len'")], [('0', 'byte',
+      1)], [('0', 'float', 1)], '', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [956.0, 920]
+    rotation: 270
+    state: enabled
+- name: epy_block_5_2
+  id: epy_block
+  parameters:
+    _source_code: "import numpy as np, pmt\nfrom gnuradio import gr\n\nclass blk(gr.basic_block):\n\
+      \    def __init__(self, len_tag_key=\"packet_len\"):\n        gr.basic_block.__init__(self,\
+      \ name=\"len_meter_ts\",\n                                in_sig=[np.uint8],\
+      \ out_sig=[np.float32])\n        self.len_key = pmt.intern(len_tag_key)\n\n\
+      \    def general_work(self, input_items, output_items):\n        inp, out =\
+      \ input_items[0], output_items[0]\n        n = len(inp)\n        if n == 0 or\
+      \ len(out) == 0:\n            return 0\n        n_read = self.nitems_read(0)\n\
+      \        tags = self.get_tags_in_window(0, 0, n, self.len_key)\n        if not\
+      \ tags:\n            return 0\n        t = tags[0]\n        rel = int(t.offset\
+      \ - n_read)\n        if rel > 0:\n            self.consume(0, rel); \n     \
+      \       return 0\n        L = int(pmt.to_long(t.value))\n        if n < L: \
+      \ # wait for full frame in this window\n            return 0\n        out[0]\
+      \ = float(L)\n        self.consume(0, L)   # advance exactly one frame\n   \
+      \     return 1\n"
+    affinity: ''
+    alias: len_asm
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('len_meter_ts', 'blk', [('len_tag_key', "'packet_len'")], [('0', 'byte',
+      1)], [('0', 'float', 1)], '', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [604.0, 912]
+    rotation: 270
+    state: enabled
+- name: epy_block_5_3
+  id: epy_block
+  parameters:
+    _source_code: "import numpy as np, pmt\nfrom gnuradio import gr\n\nclass blk(gr.basic_block):\n\
+      \    def __init__(self, len_tag_key=\"packet_len\"):\n        gr.basic_block.__init__(self,\
+      \ name=\"len_meter_ts\",\n                                in_sig=[np.uint8],\
+      \ out_sig=[np.float32])\n        self.len_key = pmt.intern(len_tag_key)\n\n\
+      \    def general_work(self, input_items, output_items):\n        inp, out =\
+      \ input_items[0], output_items[0]\n        n = len(inp)\n        if n == 0 or\
+      \ len(out) == 0:\n            return 0\n        n_read = self.nitems_read(0)\n\
+      \        tags = self.get_tags_in_window(0, 0, n, self.len_key)\n        if not\
+      \ tags:\n            return 0\n        t = tags[0]\n        rel = int(t.offset\
+      \ - n_read)\n        if rel > 0:\n            self.consume(0, rel); \n     \
+      \       return 0\n        L = int(pmt.to_long(t.value))\n        if n < L: \
+      \ # wait for full frame in this window\n            return 0\n        out[0]\
+      \ = float(L)\n        self.consume(0, L)   # advance exactly one frame\n   \
+      \     return 1\n"
+    affinity: ''
+    alias: len_conv
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('len_meter_ts', 'blk', [('len_tag_key', "'packet_len'")], [('0', 'byte',
+      1)], [('0', 'float', 1)], '', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [332.0, 912]
+    rotation: 270
+    state: enabled
+- name: epy_block_5_4
+  id: epy_block
+  parameters:
+    _source_code: "import numpy as np, pmt\nfrom gnuradio import gr\n\nclass blk(gr.basic_block):\n\
+      \    def __init__(self, len_tag_key=\"packet_len\"):\n        gr.basic_block.__init__(self,\
+      \ name=\"len_meter_ts\",\n                                in_sig=[np.uint8],\
+      \ out_sig=[np.float32])\n        self.len_key = pmt.intern(len_tag_key)\n\n\
+      \    def general_work(self, input_items, output_items):\n        inp, out =\
+      \ input_items[0], output_items[0]\n        n = len(inp)\n        if n == 0 or\
+      \ len(out) == 0:\n            return 0\n        n_read = self.nitems_read(0)\n\
+      \        tags = self.get_tags_in_window(0, 0, n, self.len_key)\n        if not\
+      \ tags:\n            return 0\n        t = tags[0]\n        rel = int(t.offset\
+      \ - n_read)\n        if rel > 0:\n            self.consume(0, rel); \n     \
+      \       return 0\n        L = int(pmt.to_long(t.value))\n        if n < L: \
+      \ # wait for full frame in this window\n            return 0\n        out[0]\
+      \ = float(L)\n        self.consume(0, L)   # advance exactly one frame\n   \
+      \     return 1\n"
+    affinity: ''
+    alias: len_tagger
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('len_meter_ts', 'blk', [('len_tag_key', "'packet_len'")], [('0', 'byte',
+      1)], [('0', 'float', 1)], '', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [380.0, 352]
+    rotation: 90
+    state: enabled
+- name: epy_block_6
+  id: epy_block
+  parameters:
+    _source_code: "import numpy as np\nfrom gnuradio import gr\nimport pmt\n\nclass\
+      \ blk(gr.basic_block):\n    \"\"\"\n    Reads CCSDS Space Packets from a raw\
+      \ byte stream and adds a 'packet_len' tag\n    at the start of each packet.\
+      \ Assumes packets are concatenated back-to-back.\n    CCSDS primary header:\
+      \ 6 bytes total; bytes [4:6] is Packet Length (big-endian)\n    meaning: total\
+      \ bytes in the Data Field minus 1. So total packet bytes =\n    6 + (PacketLength\
+      \ + 1).\n    \"\"\"\n    def __init__(self, len_tag_key=\"packet_len\"):\n \
+      \       gr.basic_block.__init__(self,\n            name=\"spp_len_tagger\",\n\
+      \            in_sig=[np.uint8],\n            out_sig=[np.uint8])\n        self.len_tag_key\
+      \ = pmt.intern(len_tag_key)\n        self._buf = bytearray()\n        self._abs_out\
+      \ = 0  # absolute output item index\n\n    def general_work(self, input_items,\
+      \ output_items):\n        inp = input_items[0]\n        out = output_items[0]\n\
+      \n        # append new input to buffer\n        self._buf += bytes(inp.tobytes())\n\
+      \n        produced = 0\n        consumed = len(inp)\n\n        # process complete\
+      \ packets from buffer\n        while True:\n            if len(self._buf) <\
+      \ 6:\n                break  # need full primary header\n\n            # CCSDS\
+      \ is big-endian\n            pkt_len_field = (self._buf[4] << 8) | self._buf[5]\n\
+      \            total_len = 6 + (pkt_len_field + 1)  # primary hdr + data field\n\
+      \n            if len(self._buf) < total_len:\n                break  # wait\
+      \ for full packet\n\n            # emit a packet_len tag at the *current* output\
+      \ absolute index\n            self.add_item_tag(0, self._abs_out, self.len_tag_key,\
+      \ pmt.from_long(total_len))\n\n            # copy this packet to output\n  \
+      \          n = min(len(out) - produced, total_len)\n            if n < total_len:\n\
+      \                # not enough output space this call\n                break\n\
+      \n            out[produced:produced+total_len] = np.frombuffer(self._buf[:total_len],\
+      \ dtype=np.uint8)\n            produced += total_len\n            self._abs_out\
+      \ += total_len\n\n            # drop packet from buffer\n            del self._buf[:total_len]\n\
+      \n        # if there's leftover room in out, copy whatever we can (no tags)\n\
+      \        spill = min(len(out) - produced, len(self._buf))\n        if spill:\n\
+      \            out[produced:produced+spill] = np.frombuffer(self._buf[:spill],\
+      \ dtype=np.uint8)\n            produced += spill\n            self._abs_out\
+      \ += spill\n            del self._buf[:spill]\n\n        self.consume(0, consumed)\n\
+      \        return produced\n\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: '(''spp_len_tagger'', ''blk'', [(''len_tag_key'', "''packet_len''")],
+      [(''0'', ''byte'', 1)], [(''0'', ''byte'', 1)], "\n    Reads CCSDS Space Packets
+      from a raw byte stream and adds a ''packet_len'' tag\n    at the start of each
+      packet. Assumes packets are concatenated back-to-back.\n    CCSDS primary header:
+      6 bytes total; bytes [4:6] is Packet Length (big-endian)\n    meaning: total
+      bytes in the Data Field minus 1. So total packet bytes =\n    6 + (PacketLength
+      + 1).\n    ", [''len_tag_key''])'
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [256, 556.0]
+    rotation: 0
+    state: true
+- name: qtgui_number_sink_0
+  id: qtgui_number_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    autoscale: 'True'
+    avg: '0'
+    color1: ("black", "black")
+    color10: ("black", "black")
+    color2: ("black", "black")
+    color3: ("black", "black")
+    color4: ("black", "black")
+    color5: ("black", "black")
+    color6: ("black", "black")
+    color7: ("black", "black")
+    color8: ("black", "black")
+    color9: ("black", "black")
+    comment: ''
+    factor1: '1'
+    factor10: '1'
+    factor2: '1'
+    factor3: '1'
+    factor4: '1'
+    factor5: '1'
+    factor6: '1'
+    factor7: '1'
+    factor8: '1'
+    factor9: '1'
+    graph_type: qtgui.NUM_GRAPH_HORIZ
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    max: '1'
+    min: '-1'
+    name: '""'
+    nconnections: '1'
+    type: float
+    unit1: ''
+    unit10: ''
+    unit2: ''
+    unit3: ''
+    unit4: ''
+    unit5: ''
+    unit6: ''
+    unit7: ''
+    unit8: ''
+    unit9: ''
+    update_time: '0.10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [444.0, 360]
+    rotation: 270
+    state: true
+- name: qtgui_number_sink_0_0
+  id: qtgui_number_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    autoscale: 'True'
+    avg: '0'
+    color1: ("black", "black")
+    color10: ("black", "black")
+    color2: ("black", "black")
+    color3: ("black", "black")
+    color4: ("black", "black")
+    color5: ("black", "black")
+    color6: ("black", "black")
+    color7: ("black", "black")
+    color8: ("black", "black")
+    color9: ("black", "black")
+    comment: ''
+    factor1: '1'
+    factor10: '1'
+    factor2: '1'
+    factor3: '1'
+    factor4: '1'
+    factor5: '1'
+    factor6: '1'
+    factor7: '1'
+    factor8: '1'
+    factor9: '1'
+    graph_type: qtgui.NUM_GRAPH_HORIZ
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    max: '1'
+    min: '-1'
+    name: '""'
+    nconnections: '1'
+    type: float
+    unit1: ''
+    unit10: ''
+    unit2: ''
+    unit3: ''
+    unit4: ''
+    unit5: ''
+    unit6: ''
+    unit7: ''
+    unit8: ''
+    unit9: ''
+    update_time: '0.10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [732.0, 352]
+    rotation: 270
+    state: true
+- name: qtgui_number_sink_0_1
+  id: qtgui_number_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    autoscale: 'True'
+    avg: '0'
+    color1: ("black", "black")
+    color10: ("black", "black")
+    color2: ("black", "black")
+    color3: ("black", "black")
+    color4: ("black", "black")
+    color5: ("black", "black")
+    color6: ("black", "black")
+    color7: ("black", "black")
+    color8: ("black", "black")
+    color9: ("black", "black")
+    comment: ''
+    factor1: '1'
+    factor10: '1'
+    factor2: '1'
+    factor3: '1'
+    factor4: '1'
+    factor5: '1'
+    factor6: '1'
+    factor7: '1'
+    factor8: '1'
+    factor9: '1'
+    graph_type: qtgui.NUM_GRAPH_HORIZ
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    max: '1'
+    min: '-1'
+    name: '""'
+    nconnections: '1'
+    type: float
+    unit1: ''
+    unit10: ''
+    unit2: ''
+    unit3: ''
+    unit4: ''
+    unit5: ''
+    unit6: ''
+    unit7: ''
+    unit8: ''
+    unit9: ''
+    update_time: '0.10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1252.0, 376]
+    rotation: 270
+    state: true
+- name: qtgui_number_sink_0_2
+  id: qtgui_number_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    autoscale: 'True'
+    avg: '0'
+    color1: ("black", "black")
+    color10: ("black", "black")
+    color2: ("black", "black")
+    color3: ("black", "black")
+    color4: ("black", "black")
+    color5: ("black", "black")
+    color6: ("black", "black")
+    color7: ("black", "black")
+    color8: ("black", "black")
+    color9: ("black", "black")
+    comment: ''
+    factor1: '1'
+    factor10: '1'
+    factor2: '1'
+    factor3: '1'
+    factor4: '1'
+    factor5: '1'
+    factor6: '1'
+    factor7: '1'
+    factor8: '1'
+    factor9: '1'
+    graph_type: qtgui.NUM_GRAPH_HORIZ
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    max: '1'
+    min: '-1'
+    name: '""'
+    nconnections: '1'
+    type: float
+    unit1: ''
+    unit10: ''
+    unit2: ''
+    unit3: ''
+    unit4: ''
+    unit5: ''
+    unit6: ''
+    unit7: ''
+    unit8: ''
+    unit9: ''
+    update_time: '0.10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [860.0, 920]
+    rotation: 90
+    state: true
+- name: qtgui_number_sink_0_3
+  id: qtgui_number_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    autoscale: 'True'
+    avg: '0'
+    color1: ("black", "black")
+    color10: ("black", "black")
+    color2: ("black", "black")
+    color3: ("black", "black")
+    color4: ("black", "black")
+    color5: ("black", "black")
+    color6: ("black", "black")
+    color7: ("black", "black")
+    color8: ("black", "black")
+    color9: ("black", "black")
+    comment: ''
+    factor1: '1'
+    factor10: '1'
+    factor2: '1'
+    factor3: '1'
+    factor4: '1'
+    factor5: '1'
+    factor6: '1'
+    factor7: '1'
+    factor8: '1'
+    factor9: '1'
+    graph_type: qtgui.NUM_GRAPH_HORIZ
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    max: '1'
+    min: '-1'
+    name: '""'
+    nconnections: '1'
+    type: float
+    unit1: ''
+    unit10: ''
+    unit2: ''
+    unit3: ''
+    unit4: ''
+    unit5: ''
+    unit6: ''
+    unit7: ''
+    unit8: ''
+    unit9: ''
+    update_time: '0.10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [508.0, 912]
+    rotation: 90
+    state: true
+- name: qtgui_number_sink_0_4
+  id: qtgui_number_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    autoscale: 'True'
+    avg: '0'
+    color1: ("black", "black")
+    color10: ("black", "black")
+    color2: ("black", "black")
+    color3: ("black", "black")
+    color4: ("black", "black")
+    color5: ("black", "black")
+    color6: ("black", "black")
+    color7: ("black", "black")
+    color8: ("black", "black")
+    color9: ("black", "black")
+    comment: ''
+    factor1: '1'
+    factor10: '1'
+    factor2: '1'
+    factor3: '1'
+    factor4: '1'
+    factor5: '1'
+    factor6: '1'
+    factor7: '1'
+    factor8: '1'
+    factor9: '1'
+    graph_type: qtgui.NUM_GRAPH_HORIZ
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    max: '1'
+    min: '-1'
+    name: '""'
+    nconnections: '1'
+    type: float
+    unit1: ''
+    unit10: ''
+    unit2: ''
+    unit3: ''
+    unit4: ''
+    unit5: ''
+    unit6: ''
+    unit7: ''
+    unit8: ''
+    unit9: ''
+    update_time: '0.10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [236.0, 912]
+    rotation: 90
+    state: true
+
+connections:
+- [blocks_file_source_0, '0', epy_block_6, '0']
+- [blocks_throttle2_0, '0', blocks_file_sink_0, '0']
+- [epy_block_0, '0', blocks_file_sink_0_0, '0']
+- [epy_block_0, '0', epy_block_1, '0']
+- [epy_block_0, '0', epy_block_5, '0']
+- [epy_block_1, '0', blocks_file_sink_0_0_0_0, '0']
+- [epy_block_1, '0', epy_block_4, '0']
+- [epy_block_1, '0', epy_block_5_0, '0']
+- [epy_block_2, '0', blocks_file_sink_0_1, '0']
+- [epy_block_2, '0', epy_block_3, '0']
+- [epy_block_2, '0', epy_block_5_2, '0']
+- [epy_block_3, '0', blocks_file_sink_0_0_0_2, '0']
+- [epy_block_3, '0', blocks_throttle2_0, '0']
+- [epy_block_3, '0', epy_block_5_3, '0']
+- [epy_block_4, '0', blocks_file_sink_0_0_0, '0']
+- [epy_block_4, '0', epy_block_2, '0']
+- [epy_block_4, '0', epy_block_5_1, '0']
+- [epy_block_5, '0', qtgui_number_sink_0_0, '0']
+- [epy_block_5_0, '0', qtgui_number_sink_0_1, '0']
+- [epy_block_5_1, '0', qtgui_number_sink_0_2, '0']
+- [epy_block_5_2, '0', qtgui_number_sink_0_3, '0']
+- [epy_block_5_3, '0', qtgui_number_sink_0_4, '0']
+- [epy_block_5_4, '0', qtgui_number_sink_0, '0']
+- [epy_block_6, '0', blocks_file_sink_0_0_1, '0']
+- [epy_block_6, '0', epy_block_0, '0']
+- [epy_block_6, '0', epy_block_5_4, '0']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.7.0
