@@ -1,0 +1,38 @@
+[
+  {
+    "name": "CFDP_META",
+    "apid": "0x0B3",
+    "type": "TC",
+    "sec_hdr": { "mode": "ns8" },                     
+    "body": { "mode": "ascii", "text": "0.21/data/", "pad_byte": "00" },
+    "use_mic": false,
+    "data_field_len": 138                              
+  },
+  {
+    "name": "ADCS_TLM_SHORT",
+    "apid": "0x042",
+    "type": "TM",
+    "sec_hdr": { "mode": "sec_us32" },                 
+    "body": { "mode": "pattern", "pattern16": true, "extra_bytes": 16 },
+    "use_mic": true,
+    "data_field_len": 128
+  },
+  {
+    "name": "PAYLOAD_TLM_LONG",
+    "apid": "0x250",
+    "type": "TM",
+    "sec_hdr": { "mode": "ns8" },
+    "body": { "mode": "pattern", "pattern16": true, "extra_bytes": 64 },
+    "use_mic": true,
+    "data_field_len": 512
+  },
+  {
+    "name": "HK_TLM_TINY",
+    "apid": "0x07F",
+    "type": "TM",
+    "sec_hdr": { "mode": "fixed", "hex": "01020304AABBCCDD" }, 
+    "body": { "mode": "ascii", "text": "HK", "pad_byte": "00" },
+    "use_mic": false,
+    "data_field_len": 64
+  }
+]

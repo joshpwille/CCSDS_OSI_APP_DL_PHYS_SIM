@@ -1,0 +1,3 @@
+apid_hex,name,rx_packets,rx_bytes_total,size_avg,size_min,size_max,pps,p50_ms,p95_ms,p99_ms,mic_ok,mic_bad,mic_none,mic_off,mic_short,duplicates,loss_count,loss_rate,tx_sent,rx_unique
+0x07f,HK_TLM_TINY,457,31990,70,70,70,233.5373973131636,4.265546798706055,4.438161849975586,4.534029960632324,0,0,457,0,0,0,43,0.086,500,457
+0x0b3,CFDP_META,457,65808,144,144,144,233.5313235698668,4.255533218383789,4.447460174560547,4.555726051330566,0,0,457,0,0,0,43,0.086,500,457

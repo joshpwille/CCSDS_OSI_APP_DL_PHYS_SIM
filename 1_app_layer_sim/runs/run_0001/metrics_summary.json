@@ -1,0 +1,84 @@
+{
+  "overall": {
+    "rx_packets": 914,
+    "rx_bytes_total": 97798,
+    "mic_counts": {
+      "none": 914
+    },
+    "size_avg_bytes": 107,
+    "size_min_bytes": 70,
+    "size_max_bytes": 144,
+    "pps": 467.07148704728434,
+    "interarrival_ms": {
+      "p50": 2.129077911376953,
+      "p95": 2.245330810546875,
+      "p99": 2.315998077392578,
+      "mean": 2.1409998848822136,
+      "std": 0.05501109857814587,
+      "duration_s": 1.954732894897461,
+      "count": 914
+    }
+  },
+  "per_apid": {
+    "0b3": {
+      "name": "CFDP_META",
+      "rx_packets": 457,
+      "rx_bytes_total": 65808,
+      "size": {
+        "avg": 144,
+        "min": 144,
+        "max": 144
+      },
+      "pps": 233.5313235698668,
+      "interarrival_ms": {
+        "p50": 4.255533218383789,
+        "p95": 4.447460174560547,
+        "p99": 4.555726051330566
+      },
+      "mic": {
+        "OK": 0,
+        "BAD": 0,
+        "none": 457,
+        "OFF": 0,
+        "SHORT": 0
+      },
+      "seq": {
+        "tx_sent": 500,
+        "rx_unique": 457,
+        "duplicates": 0,
+        "loss_count": 43,
+        "loss_rate": 0.086
+      }
+    },
+    "07f": {
+      "name": "HK_TLM_TINY",
+      "rx_packets": 457,
+      "rx_bytes_total": 31990,
+      "size": {
+        "avg": 70,
+        "min": 70,
+        "max": 70
+      },
+      "pps": 233.5373973131636,
+      "interarrival_ms": {
+        "p50": 4.265546798706055,
+        "p95": 4.438161849975586,
+        "p99": 4.534029960632324
+      },
+      "mic": {
+        "OK": 0,
+        "BAD": 0,
+        "none": 457,
+        "OFF": 0,
+        "SHORT": 0
+      },
+      "seq": {
+        "tx_sent": 500,
+        "rx_unique": 457,
+        "duplicates": 0,
+        "loss_count": 43,
+        "loss_rate": 0.086
+      }
+    }
+  }
+}
