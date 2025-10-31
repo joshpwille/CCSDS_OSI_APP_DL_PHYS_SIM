@@ -1,0 +1,1796 @@
+options:
+  parameters:
+    author: ''
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: rx_pdu_v1
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Not titled yet
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: ASM_BYTES
+  id: variable
+  parameters:
+    comment: ASM = 0x1A CF FC 1D (4 bytes)
+    value: len(ASM_MARKER)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1272, 128.0]
+    rotation: 0
+    state: enabled
+- name: ASM_MARKER
+  id: variable
+  parameters:
+    comment: ''
+    value: (0x1A, 0xCF, 0xFC, 0x1D)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1136, 128.0]
+    rotation: 0
+    state: enabled
+- name: BYTES_PER_FRAME
+  id: variable
+  parameters:
+    comment: ''
+    value: '1115'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [912, 256.0]
+    rotation: 0
+    state: enabled
+- name: BYTES_PER_TM_FRAME
+  id: variable
+  parameters:
+    comment: ''
+    value: 223 * I_RS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [296, 384.0]
+    rotation: 0
+    state: enabled
+- name: CADU_RS_ASM_BYTES
+  id: variable
+  parameters:
+    comment: ''
+    value: RS_BYTES + ASM_BYTES
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1136, 256.0]
+    rotation: 0
+    state: enabled
+- name: I_RS
+  id: variable
+  parameters:
+    comment: "RS interleave depth (because 223 \xD7 5 = 1115)"
+    value: '5'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1136, 48.0]
+    rotation: 0
+    state: enabled
+- name: K
+  id: variable
+  parameters:
+    comment: ''
+    value: '7'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [208, 384.0]
+    rotation: 0
+    state: enabled
+- name: RAND_SEED_ALL_ONES
+  id: variable
+  parameters:
+    comment: ''
+    value: '0x7FFF'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [32, 384.0]
+    rotation: 0
+    state: enabled
+- name: RSYM
+  id: variable
+  parameters:
+    comment: ''
+    value: samp_rate/sps
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [264, 144.0]
+    rotation: 0
+    state: true
+- name: RS_BYTES
+  id: variable
+  parameters:
+    comment: ''
+    value: 255 * I_RS
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1136, 192.0]
+    rotation: 0
+    state: enabled
+- name: RS_info_bytes
+  id: variable
+  parameters:
+    comment: ''
+    value: '223'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [704, 256.0]
+    rotation: 0
+    state: true
+- name: TM_BODY_LEN
+  id: variable
+  parameters:
+    comment: ''
+    value: BYTES_PER_TM_FRAME - TM_HDR_LEN
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [552, 384.0]
+    rotation: 0
+    state: enabled
+- name: TM_HDR_LEN
+  id: variable
+  parameters:
+    comment: ''
+    value: '6'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [448, 384.0]
+    rotation: 0
+    state: enabled
+- name: alpha
+  id: variable
+  parameters:
+    comment: ''
+    value: '0.35'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [360, 16.0]
+    rotation: 0
+    state: true
+- name: costas_bw
+  id: variable
+  parameters:
+    comment: ''
+    value: 2e-3
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1464, 192.0]
+    rotation: 0
+    state: true
+- name: costas_order
+  id: variable
+  parameters:
+    comment: 4 b/c qpsk
+    value: '4'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1464, 256.0]
+    rotation: 0
+    state: true
+- name: cuttoff_freq
+  id: variable
+  parameters:
+    comment: ''
+    value: 0.6 * (1 + alpha) * RSYM
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [264, 208.0]
+    rotation: 0
+    state: true
+- name: filter_size
+  id: variable
+  parameters:
+    comment: ''
+    value: '32'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [480, 32.0]
+    rotation: 0
+    state: true
+- name: loop_bw
+  id: variable
+  parameters:
+    comment: ''
+    value: '0.005'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [448, 224.0]
+    rotation: 0
+    state: true
+- name: rrc_taps
+  id: variable
+  parameters:
+    comment: ''
+    value: firdes.root_raised_cosine(1.0, samp_rate, RSYM, alpha, span_symbols*sps*filter_size)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [448, 160.0]
+    rotation: 0
+    state: true
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: 2e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [264, 16.0]
+    rotation: 0
+    state: enabled
+- name: soft_flip
+  id: variable
+  parameters:
+    comment: ''
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [824, 256.0]
+    rotation: 0
+    state: true
+- name: span_symbols
+  id: variable
+  parameters:
+    comment: ''
+    value: '8'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [456, 96.0]
+    rotation: 0
+    state: true
+- name: sps
+  id: variable
+  parameters:
+    comment: ''
+    value: '8'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [264, 80.0]
+    rotation: 0
+    state: true
+- name: trans_width
+  id: variable
+  parameters:
+    comment: ''
+    value: 0.005 * samp_rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [264, 272.0]
+    rotation: 0
+    state: true
+- name: blocks_file_sink_0_0
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: tm_out_rx
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Projects/CCSDS_OSI_APP_DL_PHYS_SIM/2_datalink_physical_sim_grc/qpsk/data/Rx_data/tm_rx_out.bin
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1080, 556.0]
+    rotation: 0
+    state: enabled
+- name: blocks_file_sink_0_0_0
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: rs_out_rx
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Projects/CCSDS_OSI_APP_DL_PHYS_SIM/2_datalink_physical_sim_grc/qpsk/data/Rx_data/rs_rx_out.bin
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1896, 1028.0]
+    rotation: 180
+    state: enabled
+- name: blocks_file_sink_0_0_0_0
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: asm_out_rx
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Projects/CCSDS_OSI_APP_DL_PHYS_SIM/2_datalink_physical_sim_grc/qpsk/data/Rx_data/asm_rx_out.bin
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1408, 996.0]
+    rotation: 180
+    state: enabled
+- name: blocks_file_sink_0_0_0_0_0
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: randy_out_rx
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Projects/CCSDS_OSI_APP_DL_PHYS_SIM/2_datalink_physical_sim_grc/qpsk/data/Rx_data/rand_rx_out.bin
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1624, 588.0]
+    rotation: 0
+    state: enabled
+- name: blocks_file_sink_0_0_0_2
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: conv_out_rx
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Projects/CCSDS_OSI_APP_DL_PHYS_SIM/2_datalink_physical_sim_grc/qpsk/data/Rx_data/conv_rx_out.bin
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [904, 1012.0]
+    rotation: 180
+    state: enabled
+- name: blocks_file_sink_0_0_0_2_0
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: into_rx
+    append: 'False'
+    comment: ''
+    file: /home/dogg/Projects/CCSDS_OSI_APP_DL_PHYS_SIM/2_datalink_physical_sim_grc/qpsk/data/Rx_data/into_rx.bin
+    type: byte
+    unbuffered: 'False'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [344, 1228.0]
+    rotation: 180
+    state: enabled
+- name: blocks_tag_debug_1
+  id: blocks_tag_debug
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    display: 'True'
+    filter: '""'
+    name: ''
+    num_inputs: '1'
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2672, 1052.0]
+    rotation: 0
+    state: true
+- name: blocks_tagged_stream_align_0
+  id: blocks_tagged_stream_align
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    lengthtagname: packet_len
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: byte
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [544, 676.0]
+    rotation: 180
+    state: true
+- name: epy_block_0
+  id: epy_block
+  parameters:
+    K: K
+    _source_code: "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\"\"\"\nccsds_viterbi_k7_r12_hard_epy_frameless_tapped\
+      \ \u2014 fixed-chunk Viterbi with float tap\n\nIn  : uint8 BYTES, continuous,\
+      \ packed 8 bits/byte. Every 'coded_len_in' bytes = one coded frame.\nOut0: uint8\
+      \ BYTES (decoded bytes)\nOut1: float32     (mirror of Out0 for GUI taps)\nTags:\
+      \ Emits 'packet_len' = decoded_len_out on BOTH outputs at each frame start.\n\
+      \nDefaults match your TX:\n- K=7, G0=171o (C1), G1=133o (C2)\n- g2_inverted=False,\
+      \ c1c2_order=True, msb_first=True\n- reset_each_frame=True (set False if encoder\
+      \ runs continuous trellis)\n\"\"\"\n\nimport numpy as np\nfrom gnuradio import\
+      \ gr\nimport pmt\n\nclass blk(gr.sync_block):\n    def __init__(self,\n    \
+      \             len_tag_key=\"packet_len\",\n                 K=7,\n         \
+      \        gen0=0o171,\n                 gen1=0o133,\n                 msb_first=True,\n\
+      \                 reset_each_frame=True,\n                 g2_inverted=False,\n\
+      \                 c1c2_order=True,\n                 coded_len_in=2558,\n  \
+      \               decoded_len_out=1279):\n        gr.sync_block.__init__(\n  \
+      \          self,\n            name=\"ccsds_viterbi_k7_r12_hard_epy_frameless_tapped\"\
+      ,\n            in_sig=[np.uint8],\n            out_sig=[np.uint8, np.float32],\
+      \   # Out0 bytes, Out1 float tap\n        )\n        # params\n        self.len_tag_key\
+      \ = str(len_tag_key)\n        self.len_key_sym = pmt.intern(self.len_tag_key)\n\
+      \        self.K = int(K)\n        self.gen0 = int(gen0)\n        self.gen1 =\
+      \ int(gen1)\n        self.msb_first = bool(msb_first)\n        self.reset_each_frame\
+      \ = bool(reset_each_frame)\n        self.g2_inverted = bool(g2_inverted)\n \
+      \       self.c1c2_order = bool(c1c2_order)\n        self.coded_len_in = int(coded_len_in)\n\
+      \        self.decoded_len_out = int(decoded_len_out)\n\n        # trellis\n\
+      \        self.NSTATES = 1 << (self.K - 1)\n        self._trellis_ns   = np.zeros((self.NSTATES,\
+      \ 2), dtype=np.uint8)\n        self._trellis_obit = np.zeros((self.NSTATES,\
+      \ 2, 2), dtype=np.uint8)\n        self._build_trellis()\n\n        # buffers/state\n\
+      \        self._inbuf  = bytearray()\n        self._outbuf = bytearray()\n  \
+      \      self._pending_out_frames = []  # lengths to tag (decoded_len_out per\
+      \ frame)\n        self._head_remaining = 0\n\n        # We add our own clean\
+      \ tags; ignore upstream tags completely\n        self.set_tag_propagation_policy(gr.TPP_DONT)\n\
+      \n    # -------- trellis --------\n    @staticmethod\n    def _parity_u32(x:\
+      \ int) -> int:\n        v = x\n        v ^= v >> 16; v ^= v >> 8; v ^= v >>\
+      \ 4\n        v &= 0xF\n        return (0x6996 >> v) & 1\n\n    def _build_trellis(self):\n\
+      \        maskK = (1 << self.K) - 1\n        maskS = (1 << (self.K - 1)) - 1\n\
+      \        for s in range(self.NSTATES):\n            for u in (0, 1):\n     \
+      \           full = ((s << 1) | u) & maskK\n                ns = (full >> 1)\
+      \ & maskS\n                b0 = self._parity_u32(full & self.gen0)  # C1\n \
+      \               b1 = self._parity_u32(full & self.gen1)  # C2\n            \
+      \    if self.g2_inverted:\n                    b1 ^= 1\n                self._trellis_ns[s,\
+      \ u] = ns\n                self._trellis_obit[s, u, 0] = b0\n              \
+      \  self._trellis_obit[s, u, 1] = b1\n\n    # -------- pack/unpack --------\n\
+      \    def _bytes_to_bits(self, b: bytes) -> np.ndarray:\n        a = np.frombuffer(b,\
+      \ dtype=np.uint8)\n        shifts = np.array([7,6,5,4,3,2,1,0], dtype=np.uint8)\
+      \ if self.msb_first \\\n                 else np.array([0,1,2,3,4,5,6,7], dtype=np.uint8)\n\
+      \        return ((a[:, None] >> shifts[None, :]) & 1).astype(np.uint8).reshape(-1)\n\
+      \n    def _bits_to_bytes(self, bits: np.ndarray) -> bytes:\n        n = bits.size\n\
+      \        pad = (8 - (n % 8)) % 8\n        if pad:\n            bits = np.concatenate([bits,\
+      \ np.zeros(pad, dtype=np.uint8)])\n        bits = bits.reshape(-1, 8)\n    \
+      \    weights = (1 << np.array([7,6,5,4,3,2,1,0], dtype=np.uint8)).astype(np.uint16)\
+      \ \\\n                  if self.msb_first else (1 << np.array([0,1,2,3,4,5,6,7],\
+      \ dtype=np.uint8)).astype(np.uint16)\n        packed = (bits * weights).sum(axis=1).astype(np.uint8)\n\
+      \        return bytes(packed)\n\n    # -------- viterbi --------\n    def _viterbi_hard_decode(self,\
+      \ rx_bits: np.ndarray) -> bytes:\n        nbits = rx_bits.size\n        if nbits\
+      \ & 1:\n            rx_bits = rx_bits[:-1]\n            nbits -= 1\n       \
+      \ nsym = nbits // 2\n\n        BIG = 1 << 30\n        pm = np.full(self.NSTATES,\
+      \ BIG, dtype=np.int32)\n        pm_new = np.full(self.NSTATES, BIG, dtype=np.int32)\n\
+      \        if self.reset_each_frame:\n            pm[:] = BIG; pm[0] = 0\n   \
+      \     else:\n            pm[:] = 0\n\n        prev_state  = np.zeros((nsym,\
+      \ self.NSTATES), dtype=np.uint8)\n        decided_bit = np.zeros((nsym, self.NSTATES),\
+      \ dtype=np.uint8)\n\n        for t in range(nsym):\n            if self.c1c2_order:\n\
+      \                r0 = int(rx_bits[2*t + 0]); r1 = int(rx_bits[2*t + 1])  # C1,C2\n\
+      \            else:\n                r1 = int(rx_bits[2*t + 0]); r0 = int(rx_bits[2*t\
+      \ + 1])  # C2,C1\n\n            pm_new[:] = BIG\n            for s in range(self.NSTATES):\n\
+      \                cost_s = pm[s]\n                if cost_s >= BIG: continue\n\
+      \n                # u = 0\n                ns0 = self._trellis_ns[s, 0]\n  \
+      \              e00 = int(self._trellis_obit[s, 0, 0]); e01 = int(self._trellis_obit[s,\
+      \ 0, 1])\n                bm0 = (r0 ^ e00) + (r1 ^ e01)\n                c0\
+      \ = cost_s + bm0\n                if c0 < pm_new[ns0]:\n                   \
+      \ pm_new[ns0] = c0; prev_state[t, ns0] = s; decided_bit[t, ns0] = 0\n\n    \
+      \            # u = 1\n                ns1 = self._trellis_ns[s, 1]\n       \
+      \         e10 = int(self._trellis_obit[s, 1, 0]); e11 = int(self._trellis_obit[s,\
+      \ 1, 1])\n                bm1 = (r0 ^ e10) + (r1 ^ e11)\n                c1\
+      \ = cost_s + bm1\n                if c1 < pm_new[ns1]:\n                   \
+      \ pm_new[ns1] = c1; prev_state[t, ns1] = s; decided_bit[t, ns1] = 1\n\n    \
+      \        pm, pm_new = pm_new, pm\n\n        end_state = int(np.argmin(pm))\n\
+      \        bits_dec = np.zeros(nsym, dtype=np.uint8)\n        s = end_state\n\
+      \        for t in range(nsym-1, -1, -1):\n            b = decided_bit[t, s];\
+      \ bits_dec[t] = b; s = prev_state[t, s]\n        return self._bits_to_bytes(bits_dec)\n\
+      \n    # -------- work --------\n    def work(self, input_items, output_items):\n\
+      \        x  = input_items[0]\n        y0 = output_items[0]  # bytes\n      \
+      \  y1 = output_items[1]  # float tap\n\n        n_in = len(x)\n        if n_in:\n\
+      \            self._inbuf += bytes(x)\n\n        # convert as many full coded\
+      \ frames as we currently have buffered\n        while len(self._inbuf) >= self.coded_len_in:\n\
+      \            frame = bytes(self._inbuf[:self.coded_len_in])\n            del\
+      \ self._inbuf[:self.coded_len_in]\n\n            rx_bits = self._bytes_to_bits(frame)\n\
+      \            dec = self._viterbi_hard_decode(rx_bits)\n            if len(dec)\
+      \ > self.decoded_len_out:\n                dec = dec[:self.decoded_len_out]\n\
+      \            self._outbuf += dec\n            self._pending_out_frames.append(self.decoded_len_out)\n\
+      \n        if not self._outbuf:\n            self.consume_each(n_in)\n      \
+      \      return 0\n\n        space = min(len(y0), len(y1))  # sync_block -> must\
+      \ produce equal on all outputs\n        if space == 0:\n            self.consume_each(n_in)\n\
+      \            return 0\n\n        produced = 0\n        ow0 = self.nitems_written(0)\n\
+      \        ow1 = self.nitems_written(1)\n\n        while space > 0 and self._outbuf:\n\
+      \            # start-of-frame tagging on BOTH outputs\n            if self._head_remaining\
+      \ == 0:\n                if not self._pending_out_frames:\n                \
+      \    break\n                self._head_remaining = self._pending_out_frames[0]\n\
+      \                self.add_item_tag(0, ow0 + produced, self.len_key_sym, pmt.from_long(self.decoded_len_out))\n\
+      \                self.add_item_tag(1, ow1 + produced, self.len_key_sym, pmt.from_long(self.decoded_len_out))\n\
+      \n            chunk = min(space, self._head_remaining, len(self._outbuf))\n\
+      \            if chunk <= 0: break\n\n            # bytes out\n            y0[produced:produced+chunk]\
+      \ = np.frombuffer(self._outbuf[:chunk], dtype=np.uint8)\n            # float\
+      \ tap (0..255 as float)\n            y1[produced:produced+chunk] = np.frombuffer(self._outbuf[:chunk],\
+      \ dtype=np.uint8).astype(np.float32)\n\n            del self._outbuf[:chunk]\n\
+      \            produced += chunk\n            space    -= chunk\n            self._head_remaining\
+      \ -= chunk\n\n            if self._head_remaining == 0 and self._pending_out_frames:\n\
+      \                self._pending_out_frames.pop(0)\n\n        self.consume_each(n_in)\n\
+      \        return produced\n\n"
+    affinity: ''
+    alias: ''
+    c1c2_order: 'True'
+    coded_len_in: '2558'
+    comment: ''
+    decoded_len_out: '1279'
+    g2_inverted: 'False'
+    gen0: 0o171
+    gen1: 0o133
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    msb_first: 'True'
+    reset_each_frame: 'True'
+  states:
+    _io_cache: ('ccsds_viterbi_k7_r12_hard_epy_frameless_tapped', 'blk', [('len_tag_key',
+      "'packet_len'"), ('K', '7'), ('gen0', '121'), ('gen1', '91'), ('msb_first',
+      'True'), ('reset_each_frame', 'True'), ('g2_inverted', 'False'), ('c1c2_order',
+      'True'), ('coded_len_in', '2558'), ('decoded_len_out', '1279')], [('0', 'byte',
+      1)], [('0', 'byte', 1), ('1', 'float', 1)], '', ['K', 'c1c2_order', 'coded_len_in',
+      'decoded_len_out', 'g2_inverted', 'gen0', 'gen1', 'len_tag_key', 'msb_first',
+      'reset_each_frame'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [752, 1100.0]
+    rotation: 0
+    state: true
+- name: epy_block_1
+  id: epy_block
+  parameters:
+    I: I_RS
+    _source_code: "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\"\"\"\nCCSDS\
+      \ RS(255,223) I-depth deinterleaver (round-robin), RX side, with float tap.\n\
+      \nInput : BYTES (uint8), tagged stream with one length tag per CADU body:\n\
+      \        len_tag_key = 255*I (e.g., 1275 for I=5) -- ASM already stripped.\n\
+      \        Layout is interleaved: s = [cw0[0], cw1[0], ..., cw{I-1}[0], cw0[1],\
+      \ ...]\nOutput0: BYTES (uint8), tagged stream of length 255*I, deinterleaved\
+      \ & concatenated:\n         out = [cw0[0..254], cw1[0..254], ..., cw{I-1}[0..254]]\n\
+      Output1: FLOAT32 mirror of Output0 (0..255), same 'packet_len' tags (for GUI\
+      \ taps).\n\nPlace before your RS(255,223) decoder. The decoder can then consume\
+      \ the output\nin contiguous 255-byte chunks (cw0, cw1, ..., cw{I-1}).\n\"\"\"\
+      \n\nimport numpy as np, pmt\nfrom gnuradio import gr\n\nclass blk(gr.basic_block):\n\
+      \    def __init__(self, len_tag_key=\"packet_len\", I=5, expect_len=0, forward_other_tags=True):\n\
+      \        gr.basic_block.__init__(self,\n            name=\"rs255_223_deinterleave_I_tapped\"\
+      ,\n            in_sig=[np.uint8],\n            out_sig=[np.uint8, np.float32],\
+      \   # Out0 bytes, Out1 float tap\n        )\n        self.len_key_str = str(len_tag_key)\n\
+      \        self.len_key     = pmt.intern(self.len_key_str)\n        self.I   \
+      \        = int(I)\n        if self.I <= 0:\n            raise ValueError(\"\
+      I must be >= 1\")\n        self.expect_len  = int(expect_len)   # if 0 -> will\
+      \ use 255*I\n        self.forward_other_tags = bool(forward_other_tags)\n\n\
+      \        # Emit only our own length tags; forward others manually\n        try:\n\
+      \            self.set_tag_propagation_policy(gr.block.TPP_DONT)\n        except\
+      \ Exception:\n            try:\n                self.set_tag_propagation_policy(gr.TPP_DONT)\n\
+      \            except Exception:\n                pass\n\n    # ---- tag helpers\
+      \ ----\n    def _first_len_tag_here(self, n_in):\n        \"\"\"Return the first\
+      \ length tag at/after current read index within window.\"\"\"\n        tags\
+      \  = self.get_tags_in_window(0, 0, n_in)\n        tags.sort(key=lambda t: int(t.offset))\n\
+      \        for t in tags:\n            if pmt.equal(t.key, self.len_key):\n  \
+      \              return t\n        return None\n\n    def _get_other_tags(self,\
+      \ n_in):\n        nread = self.nitems_read(0)\n        tags  = self.get_tags_in_window(0,\
+      \ 0, n_in)\n        others = [t for t in tags if not pmt.equal(t.key, self.len_key)]\n\
+      \        return nread, others\n\n    # ---- work ----\n    def general_work(self,\
+      \ input_items, output_items):\n        inp = input_items[0]\n        outB =\
+      \ output_items[0]   # bytes\n        outF = output_items[1]   # float32 tap\n\
+      \n        n_in = len(inp)\n        if n_in == 0 or len(outB) == 0 or len(outF)\
+      \ == 0:\n            return 0\n\n        t = self._first_len_tag_here(n_in)\n\
+      \        if t is None:\n            return 0\n\n        nread = self.nitems_read(0)\n\
+      \        rel   = int(t.offset - nread)\n        if rel > 0:\n            # align\
+      \ to the frame start\n            self.consume(0, rel)\n            return 0\n\
+      \n        try:\n            L = int(pmt.to_long(t.value))\n        except Exception:\n\
+      \            return 0\n\n        expected = (255 * self.I) if self.expect_len\
+      \ <= 0 else self.expect_len\n        if L < expected or n_in < L:\n        \
+      \    # wait for full frame\n            return 0\n\n        frame = np.array(inp[:L],\
+      \ dtype=np.uint8)\n\n        # Robustness: length must be a multiple of I\n\
+      \        if (L % self.I) != 0:\n            self.consume(0, L)\n           \
+      \ return 0\n\n        symbols_per_cw = L // self.I\n        if symbols_per_cw\
+      \ < 255:\n            # malformed; not enough for a full RS codeword\n     \
+      \       self.consume(0, L)\n            return 0\n\n        N = 255\n      \
+      \  needed = N * self.I\n        cap = min(len(outB), len(outF))\n        if\
+      \ cap < needed:\n            return 0\n\n        # Deinterleave: for each branch\
+      \ j, take frame[j::I][:N] and place contiguously\n        write_idx = 0\n  \
+      \      for j in range(self.I):\n            cw = frame[j::self.I][:N]\n    \
+      \        outB[write_idx:write_idx+N] = cw\n            # float tap mirror\n\
+      \            outF[write_idx:write_idx+N] = cw.astype(np.float32)\n         \
+      \   write_idx += N\n\n        # Emit output length tag (still 255*I) on BOTH\
+      \ outputs\n        base0 = self.nitems_written(0)\n        base1 = self.nitems_written(1)\n\
+      \        tag_val = pmt.from_long(needed)\n        self.add_item_tag(0, base0,\
+      \ self.len_key, tag_val)\n        self.add_item_tag(1, base1, self.len_key,\
+      \ tag_val)\n\n        # Optionally forward non-length tags with offset mapping\
+      \ to BOTH outputs\n        if self.forward_other_tags:\n            nread0,\
+      \ others = self._get_other_tags(L)\n            nwrite0_B = self.nitems_written(0)\n\
+      \            nwrite0_F = self.nitems_written(1)\n            for t2 in others:\n\
+      \                k = int(t2.offset - nread0)  # input index within this frame\n\
+      \                if 0 <= k < L:\n                    branch = k % self.I\n \
+      \                   sym    = k // self.I\n                    if sym < N:\n\
+      \                        out_off = branch*255 + sym\n                      \
+      \  # bytes output\n                        try:\n                          \
+      \  self.add_item_tag(0, nwrite0_B + out_off, t2.key, t2.value, t2.srcid)\n \
+      \                       except TypeError:\n                            self.add_item_tag(0,\
+      \ nwrite0_B + out_off, t2.key, t2.value)\n                        # float tap\
+      \ output\n                        try:\n                            self.add_item_tag(1,\
+      \ nwrite0_F + out_off, t2.key, t2.value, t2.srcid)\n                       \
+      \ except TypeError:\n                            self.add_item_tag(1, nwrite0_F\
+      \ + out_off, t2.key, t2.value)\n\n        # Consume exactly one (interleaved)\
+      \ frame\n        self.consume(0, L)\n        # Produce exactly 'needed' on BOTH\
+      \ outputs\n        return needed\n\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    expect_len: '1275'
+    forward_other_tags: 'True'
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('rs255_223_deinterleave_I_tapped', 'blk', [('len_tag_key', "'packet_len'"),
+      ('I', '5'), ('expect_len', '0'), ('forward_other_tags', 'True')], [('0', 'byte',
+      1)], [('0', 'byte', 1), ('1', 'float', 1)], '', ['I', 'expect_len', 'forward_other_tags'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1896, 1116.0]
+    rotation: 0
+    state: true
+- name: epy_block_2
+  id: epy_block
+  parameters:
+    _source_code: "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\"\"\"\nCCSDS\
+      \ TM de-randomizer (multiplicative scrambler), frame-synced \u2014 with float\
+      \ tap.\n\nIn  : BYTES (uint8), continuous stream with 'packet_len' tags per\
+      \ frame\nOut0: BYTES (uint8), de-randomized (main path)\nOut1: FLOAT32     \
+      \  mirror of Out0 for GUI taps (Number Sink / Len Meter)\n\nBehavior:\n- Restarts\
+      \ 8-bit LFSR at each frame start (seen via length-tag).\n- Optionally skips\
+      \ the first 'skip_bytes_at_frame_start' bytes per frame (e.g., ASM).\n- XOR\
+      \ with PN bytes is symmetric; set enabled=False for pass-through.\n- Tag propagation:\
+      \ TPP_ALL (all input tags, including 'packet_len', propagate to BOTH outputs).\n\
+      \"\"\"\n\nimport numpy as np\nfrom gnuradio import gr\nimport pmt\n\nclass blk(gr.basic_block):\n\
+      \    def __init__(self,\n                 len_tag_key=\"packet_len\",\n    \
+      \             seed=0xFF,\n                 taps=(8,7,5,3),         # CCSDS default\
+      \ polynomial taps (excluding x^8 which is implicit)\n                 skip_bytes_at_frame_start=0,\n\
+      \                 enabled=True):\n        gr.basic_block.__init__(self,\n  \
+      \          name=\"ccsds_tm_derandomizer_tapped\",\n            in_sig=[np.uint8],\n\
+      \            out_sig=[np.uint8, np.float32],  # Out0 bytes, Out1 float tap\n\
+      \        )\n\n        # ---- Config ----\n        self.len_tag_key_str = str(len_tag_key)\n\
+      \        self.len_tag_key     = pmt.intern(self.len_tag_key_str)\n        self.enabled\
+      \         = bool(enabled)\n        self.skip_bytes      = int(skip_bytes_at_frame_start)\n\
+      \n        # 8-bit LFSR state and taps\n        self.seed            = int(seed)\
+      \ & 0xFF\n        self._lfsr           = self.seed\n        self._taps     \
+      \      = tuple(sorted(set(int(t) for t in taps if 1 <= int(t) <= 7), reverse=True))\n\
+      \n        # Frame state\n        self._in_frame       = False\n        self._frame_left\
+      \     = 0\n        self._skip_left      = 0\n\n        # Forward all upstream\
+      \ tags to BOTH outputs (we also add none ourselves)\n        try:\n        \
+      \    self.set_tag_propagation_policy(gr.block.TPP_ALL)\n        except AttributeError:\n\
+      \            try:\n                self.set_tag_propagation_policy(gr.TPP_ALL)\n\
+      \            except AttributeError:\n                pass\n\n    # --------\
+      \ LFSR core --------\n    def _reset_lfsr(self):\n        self._lfsr = self.seed\
+      \ & 0xFF\n        if self._lfsr == 0:\n            self._lfsr = 0xFF  # avoid\
+      \ zero lock\n\n    def _next_pn_byte(self):\n        out_byte = 0\n        for\
+      \ _ in range(8):\n            msb = (self._lfsr >> 7) & 0x1\n            out_byte\
+      \ = ((out_byte << 1) | msb) & 0xFF\n\n            fb = msb\n            s =\
+      \ self._lfsr\n            for t in self._taps:\n                fb ^= (s >>\
+      \ (t - 1)) & 0x1\n\n            self._lfsr = ((self._lfsr << 1) & 0xFF) | fb\n\
+      \        return out_byte\n\n    # -------- Helpers --------\n    def _frame_start(self,\
+      \ frame_len):\n        self._reset_lfsr()\n        self._in_frame   = True\n\
+      \        self._frame_left = int(frame_len)\n        self._skip_left  = min(self.skip_bytes,\
+      \ self._frame_left)\n\n    def _apply_derand_into(self, src, dst, n):\n    \
+      \    # byte-wise XOR with PN; src,dst are numpy uint8 views\n        for i in\
+      \ range(n):\n            dst[i] = src[i] ^ self._next_pn_byte()\n\n    def _find_starts(self,\
+      \ n_input):\n        \"\"\"Return sorted list of (rel_offset, frame_len) for\
+      \ all length-tag starts in this window.\"\"\"\n        in0 = 0\n        nread\
+      \ = self.nitems_read(in0)\n        tags = self.get_tags_in_range(in0, nread,\
+      \ nread + n_input, self.len_tag_key)\n        starts = []\n        for t in\
+      \ tags:\n            try:\n                L = int(pmt.to_long(t.value))\n \
+      \           except Exception:\n                continue\n            if L >\
+      \ 0:\n                rel = int(t.offset - nread)\n                starts.append((rel,\
+      \ L))\n        starts.sort(key=lambda x: x[0])\n        return starts\n\n  \
+      \  # -------- Work --------\n    def general_work(self, input_items, output_items):\n\
+      \        inp = input_items[0]\n        out_b = output_items[0]  # bytes\n  \
+      \      out_f = output_items[1]  # float tap\n\n        n_in  = len(inp)\n  \
+      \      n_out = min(len(out_b), len(out_f))  # produce same count on both outs\n\
+      \        if n_in == 0 or n_out == 0:\n            return 0\n\n        produced\
+      \ = 0\n        consumed = 0\n        cursor   = 0\n\n        # Discover all\
+      \ frame-starts within this window\n        starts = self._find_starts(n_in)\n\
+      \        starts_idx = 0\n\n        def emit_chunk(src_start, n_bytes, do_derand,\
+      \ skip_first):\n            \"\"\"Process n_bytes from inp[src_start:src_start+n_bytes]\
+      \ into both outputs.\"\"\"\n            nonlocal produced, consumed\n\n    \
+      \        n = min(n_bytes, n_out - produced)\n            if n <= 0:\n      \
+      \          return\n\n            src = inp[src_start:src_start+n].view(np.uint8)\n\
+      \            dst_b = out_b[produced:produced+n].view(np.uint8)\n\n         \
+      \   if (not self.enabled) or (not do_derand):\n                # passthrough\n\
+      \                dst_b[:] = src\n            else:\n                # optional\
+      \ leading passthrough (skip_first), then derand the rest\n                k\
+      \ = min(skip_first, n)\n                if k > 0:\n                    dst_b[:k]\
+      \ = src[:k]\n                    skip_first -= k\n                    if k ==\
+      \ n:\n                        # nothing left to derand in this call\n      \
+      \                  out_f[produced:produced+n] = dst_b.astype(np.float32)\n \
+      \                       produced += n\n                        consumed += n\n\
+      \                        return\n                    # fallthrough to derand\
+      \ the remainder\n                    src = src[k:]\n                    dst_b\
+      \ = dst_b[k:]\n                    n -= k\n                # derandomize remaining\
+      \ bytes into dst_b\n                self._apply_derand_into(src, dst_b, n)\n\
+      \n            # mirror to float tap\n            out_f[produced:produced + (len(dst_b)\
+      \ if isinstance(dst_b, np.ndarray) else n)] = \\\n                out_b[produced:produced+n].astype(np.float32)\n\
+      \n            produced += (len(dst_b) if isinstance(dst_b, np.ndarray) else\
+      \ n)\n            consumed += (len(dst_b) if isinstance(dst_b, np.ndarray) else\
+      \ n)\n\n            return\n\n        # Walk the window, starting new frames\
+      \ where tags say so\n        while cursor < n_in and produced < n_out:\n   \
+      \         next_rel = starts[starts_idx][0] if starts_idx < len(starts) else\
+      \ None\n            if next_rel is None or next_rel <= cursor:\n           \
+      \     if starts_idx < len(starts) and next_rel == cursor:\n                \
+      \    # Start of a new frame right here\n                    _, L = starts[starts_idx]\n\
+      \                    self._frame_start(L)\n                    starts_idx +=\
+      \ 1\n\n                # How many bytes can we emit this call?\n           \
+      \     # If in a frame, we may need to honor skip + derand budget.\n        \
+      \        if self._in_frame:\n                    # We can emit up to what's\
+      \ left in frame OR output space OR remaining input\n                    n_possible\
+      \ = min(n_in - cursor, n_out - produced)\n                    # First chunk\
+      \ may include skip portion\n                    emit_chunk(cursor, n_possible,\
+      \ do_derand=True, skip_first=self._skip_left)\n                    # Update\
+      \ skip/frame counters based on how many actually produced\n                \
+      \    advanced = min(n_possible, n_out - produced)  # already accounted\n   \
+      \                 # Update frame accounting\n                    use = min(advanced,\
+      \ self._skip_left)\n                    self._skip_left -= use\n           \
+      \         self._frame_left -= advanced\n                    cursor += advanced\n\
+      \                    if self._frame_left <= 0:\n                        self._in_frame\
+      \ = False\n                else:\n                    # Not in a frame: straight\
+      \ passthrough until next start or output full\n                    span = min(n_in\
+      \ - cursor, n_out - produced)\n                    emit_chunk(cursor, span,\
+      \ do_derand=False, skip_first=0)\n                    cursor += span\n     \
+      \       else:\n                # bytes until next frame start\n            \
+      \    span = min(next_rel - cursor, n_in - cursor, n_out - produced)\n      \
+      \          # Outside of a frame -> passthrough\n                emit_chunk(cursor,\
+      \ span, do_derand=False, skip_first=0)\n                cursor += span\n\n \
+      \       self.consume(0, consumed)\n        return produced\n\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    enabled: 'True'
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    seed: RAND_SEED_ALL_ONES
+    skip_bytes_at_frame_start: '0'
+    taps: (8,7)
+  states:
+    _io_cache: ('ccsds_tm_derandomizer_tapped', 'blk', [('len_tag_key', "'packet_len'"),
+      ('seed', '255'), ('taps', '(8, 7, 5, 3)'), ('skip_bytes_at_frame_start', '0'),
+      ('enabled', 'True')], [('0', 'byte', 1)], [('0', 'byte', 1), ('1', 'float',
+      1)], '', ['enabled', 'len_tag_key', 'seed'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1624, 676.0]
+    rotation: 180
+    state: true
+- name: epy_block_3
+  id: epy_block
+  parameters:
+    _source_code: "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\"\"\"\nASM correlate+strip\
+      \ with optional 'trust_tags' bypass + float tap.\n\nIn  : uint8 stream after\
+      \ Viterbi (CADUs, e.g., 1279B), no tags required unless trust_tags=True\nOut0:\
+      \ uint8 payload bytes (ASM stripped)\nOut1: float32 mirror for GUI (with same\
+      \ 'packet_len' tags)\n\nModes:\n- trust_tags=False (default): correlate 0x1ACFFC1D\
+      \ across bit phases, lock/track.\n- trust_tags=True : ignore correlation; use\
+      \ upstream 'packet_len' (=cadu_len_bytes) as frame starts,\n               \
+      \     strip 'strip_len_bytes' and emit immediately.\n\nAccepts asm_word as:\
+      \ int / \"0x...\" string / bytes / bytearray / tuple(list of 4 bytes).\n\"\"\
+      \"\n\nimport numpy as np\nimport pmt\nfrom collections import deque\nfrom gnuradio\
+      \ import gr\n\n# ---------- helpers ----------\ndef _asm_to_int(val, msb_first=True)\
+      \ -> int:\n    if isinstance(val, (tuple, list)):\n        b = bytes(val)\n\
+      \        return int.from_bytes(b, 'big' if msb_first else 'little') & 0xFFFFFFFF\n\
+      \    if isinstance(val, (bytes, bytearray)):\n        return int.from_bytes(val,\
+      \ 'big' if msb_first else 'little') & 0xFFFFFFFF\n    if isinstance(val, str):\n\
+      \        return int(val, 0) & 0xFFFFFFFF\n    return int(val) & 0xFFFFFFFF\n\
+      \ndef _bytes_to_bits(arr: bytes, msb_first: bool = True) -> np.ndarray:\n  \
+      \  a = np.frombuffer(arr, dtype=np.uint8)\n    shifts = np.arange(7, -1, -1,\
+      \ dtype=np.uint8) if msb_first else np.arange(0, 8, 1, dtype=np.uint8)\n   \
+      \ return ((a[:, None] >> shifts[None, :]) & 1).astype(np.uint8).reshape(-1)\n\
+      \nclass blk(gr.basic_block):\n    def __init__(self,\n                 len_tag_key=\"\
+      packet_len\",\n                 asm_word=0x1ACFFC1D,\n                 cadu_len_bytes=1279,\n\
+      \                 strip_len_bytes=4,\n                 msb_first=True,\n   \
+      \              max_hamming=4,\n                 lock_confirm=2,\n          \
+      \       loss_threshold=3,\n                 verify_guard_bits=24,\n        \
+      \         trust_tags=False):\n        gr.basic_block.__init__(self,\n      \
+      \      name=\"ccsds_asm_correlator_strip_tapped\",\n            in_sig=[np.uint8],\n\
+      \            out_sig=[np.uint8, np.float32],\n        )\n        # params\n\
+      \        self.len_key_str  = str(len_tag_key)\n        self.len_key_sym  = pmt.intern(self.len_key_str)\n\
+      \        self.cadu_B       = int(cadu_len_bytes)\n        self.strip_B     \
+      \ = int(strip_len_bytes)\n        self.post_B       = self.cadu_B - self.strip_B\n\
+      \        self.msb_first    = bool(msb_first)\n        self.max_ham      = int(max_hamming)\n\
+      \        self.lock_confirm = int(lock_confirm)\n        self.loss_thresh  =\
+      \ int(loss_threshold)\n        self.guard_bits   = int(verify_guard_bits)\n\
+      \        self.trust_tags   = bool(trust_tags)\n\n        # normalize ASM to\
+      \ int, precompute bits\n        asm_u32 = _asm_to_int(asm_word, self.msb_first)\n\
+      \        asm_bytes = np.array([(asm_u32 >> 24) & 0xFF,\n                   \
+      \           (asm_u32 >> 16) & 0xFF,\n                              (asm_u32\
+      \ >>  8) & 0xFF,\n                               asm_u32        & 0xFF], dtype=np.uint8)\n\
+      \        self.asm_bits = np.unpackbits(asm_bytes)  # big-endian within each\
+      \ byte\n\n        # state\n        self._bitbuf  = deque()\n        self._locked\
+      \  = False\n        self._consec_hits = 0\n        self._consec_miss = 0\n \
+      \       self._need_bits_for_search = 32 + 8*4\n        self._cadu_bits  = self.cadu_B\
+      \ * 8\n        self._strip_bits = self.strip_B * 8\n\n        # NOTE: no tag-propagation\
+      \ constants used; block handles tags manually.\n\n    # ---- correlator helpers\
+      \ ----\n    def _ham32(self, win):\n        return int(np.count_nonzero(win\
+      \ ^ self.asm_bits))\n\n    def _scan(self, bits):\n        n = len(bits)\n \
+      \       if n < 32: return -1, 999\n        best_d, best_i = 999, -1\n      \
+      \  for i in range(0, n - 32 + 1):\n            d = self._ham32(bits[i:i+32])\n\
+      \            if d < best_d:\n                best_d, best_i = d, i\n       \
+      \         if d == 0: break\n        return best_i, best_d\n\n    # ----------\
+      \ TRUST TAGS PATH ----------\n    def _general_work_trust_tags(self, inpB, outB,\
+      \ outF):\n        n_in = len(inpB)\n        if n_in == 0:\n            return\
+      \ 0\n\n        nread = self.nitems_read(0)\n        tags = self.get_tags_in_range(0,\
+      \ nread, nread + n_in, pmt.intern(self.len_key_str))\n        tags.sort(key=lambda\
+      \ t: int(t.offset))\n\n        produced = 0\n        consumed = 0\n        cursor\
+      \   = 0\n        cap = min(len(outB), len(outF))\n\n        for t in tags:\n\
+      \            off = int(t.offset) - nread\n            L   = int(pmt.to_long(t.value))\n\
+      \n            # ignore stuff before the CADU start (optional passthrough to\
+      \ keep outputs aligned)\n            pre = off - cursor\n            if pre\
+      \ > 0:\n                take = min(pre, cap - produced)\n                if\
+      \ take <= 0:\n                    break\n                seg = inpB[cursor:cursor+take]\n\
+      \                outB[produced:produced+take] = seg\n                outF[produced:produced+take]\
+      \ = seg.astype(np.float32)\n                produced += take; consumed += take;\
+      \ cursor += take\n                if take < pre:\n                    self.consume(0,\
+      \ consumed)\n                    return produced\n\n            # Need full\
+      \ CADU at cursor\n            if L != self.cadu_B or cursor + L > len(inpB):\n\
+      \                break  # wait for more input\n\n            payload = inpB[cursor\
+      \ + self.strip_B : cursor + L]\n            need = len(payload)\n          \
+      \  if produced + need > cap:\n                break\n\n            outB[produced:produced+need]\
+      \ = payload\n            outF[produced:produced+need] = payload.astype(np.float32)\n\
+      \n            # tag both outputs with payload length\n            base0 = self.nitems_written(0)\
+      \ + produced\n            base1 = self.nitems_written(1) + produced\n      \
+      \      self.add_item_tag(0, base0, self.len_key_sym, pmt.from_long(self.post_B))\n\
+      \            self.add_item_tag(1, base1, self.len_key_sym, pmt.from_long(self.post_B))\n\
+      \n            produced += need\n            consumed += L\n            cursor\
+      \   += L\n\n        self.consume(0, consumed if consumed else n_in)\n      \
+      \  return produced\n\n    # ---------- CORRELATOR PATH ----------\n    def _general_work_correlate(self,\
+      \ inpB, outB, outF):\n        produced = 0\n        cap = min(len(outB), len(outF))\n\
+      \n        # append bits\n        if len(inpB):\n            self._bitbuf.extend(_bytes_to_bits(inpB.tobytes(),\
+      \ self.msb_first).tolist())\n\n        progressed = True\n        while progressed:\n\
+      \            progressed = False\n\n            if not self._locked:\n      \
+      \          if len(self._bitbuf) < self._need_bits_for_search:\n            \
+      \        break\n                arr = np.frombuffer(bytes(self._bitbuf), dtype=np.uint8)\n\
+      \                idx, dist = self._scan(arr)\n                if idx >= 0 and\
+      \ dist <= self.max_ham:\n                    for _ in range(idx): self._bitbuf.popleft()\
+      \   # align to ASM\n                    self._consec_hits += 1; self._consec_miss\
+      \ = 0\n                    if self._consec_hits >= self.lock_confirm:\n    \
+      \                    self._locked = True\n                    progressed = True\n\
+      \                else:\n                    drop = min(len(self._bitbuf) - 31,\
+      \ 8)\n                    if drop > 0:\n                        for _ in range(drop):\
+      \ self._bitbuf.popleft()\n                        progressed = True\n      \
+      \          continue\n\n            if len(self._bitbuf) < self._cadu_bits:\n\
+      \                break\n\n            arr = np.frombuffer(bytes(self._bitbuf),\
+      \ dtype=np.uint8)\n\n            # verify near head\n            head_d = self._ham32(arr[:32])\n\
+      \            if head_d > self.max_ham:\n                best_d, best_i = 999,\
+      \ -1\n                hi = min(self.guard_bits, len(arr)-32)\n             \
+      \   for i in range(0, hi+1):\n                    d = self._ham32(arr[i:i+32])\n\
+      \                    if d < best_d:\n                        best_d, best_i\
+      \ = d, i\n                        if d == 0: break\n                if best_d\
+      \ <= self.max_ham:\n                    for _ in range(best_i): self._bitbuf.popleft()\n\
+      \                else:\n                    self._consec_miss += 1; self._consec_hits\
+      \ = 0\n                    if self._consec_miss >= self.loss_thresh:\n     \
+      \                   keep = min(64, len(self._bitbuf))\n                    \
+      \    drop = len(self._bitbuf) - keep\n                        for _ in range(drop):\
+      \ self._bitbuf.popleft()\n                        self._locked = False\n   \
+      \                 else:\n                        slide = min(8, len(self._bitbuf))\n\
+      \                        for _ in range(slide): self._bitbuf.popleft()\n   \
+      \                 progressed = True\n                    continue\n\n      \
+      \      if len(self._bitbuf) < self._cadu_bits:\n                break\n\n  \
+      \          # extract payload bytes\n            buf = np.frombuffer(bytes(self._bitbuf),\
+      \ dtype=np.uint8)\n            payload_bits = buf[self._strip_bits:self._cadu_bits]\n\
+      \            pb = payload_bits.reshape(-1, 8)\n            shifts = (np.arange(7,\
+      \ -1, -1, dtype=np.uint8)\n                      if self.msb_first else\n  \
+      \                    np.arange(0, 8, 1, dtype=np.uint8))\n            out_bytes\
+      \ = (pb * (1 << shifts)).sum(axis=1).astype(np.uint8)\n\n            if produced\
+      \ + self.post_B > cap:\n                break\n\n            outB[produced:produced+self.post_B]\
+      \ = out_bytes\n            outF[produced:produced+self.post_B] = out_bytes.astype(np.float32)\n\
+      \n            # emit tags on both outputs\n            base0 = self.nitems_written(0)\
+      \ + produced\n            base1 = self.nitems_written(1) + produced\n      \
+      \      self.add_item_tag(0, base0, self.len_key_sym, pmt.from_long(self.post_B))\n\
+      \            self.add_item_tag(1, base1, self.len_key_sym, pmt.from_long(self.post_B))\n\
+      \n            produced += self.post_B\n\n            # drop the CADU we just\
+      \ consumed\n            for _ in range(self._cadu_bits): self._bitbuf.popleft()\n\
+      \            self._consec_hits += 1; self._consec_miss = 0\n            progressed\
+      \ = True\n\n        self.consume(0, len(inpB))\n        return produced\n\n\
+      \    def general_work(self, input_items, output_items):\n        inpB = input_items[0]\n\
+      \        outB = output_items[0]\n        outF = output_items[1]\n        if\
+      \ self.trust_tags:\n            return self._general_work_trust_tags(inpB, outB,\
+      \ outF)\n        else:\n            return self._general_work_correlate(inpB,\
+      \ outB, outF)\n\n"
+    affinity: ''
+    alias: ''
+    asm_word: ASM_MARKER
+    cadu_len_bytes: '1279'
+    comment: ''
+    len_tag_key: '"packet_len"'
+    lock_confirm: '2'
+    loss_threshold: '3'
+    max_hamming: '4'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    msb_first: 'True'
+    strip_len_bytes: ASM_BYTES
+    trust_tags: 'True'
+    verify_guard_bits: '24'
+  states:
+    _io_cache: ('ccsds_asm_correlator_strip_tapped', 'blk', [('len_tag_key', "'packet_len'"),
+      ('asm_word', '449838109'), ('cadu_len_bytes', '1279'), ('strip_len_bytes', '4'),
+      ('msb_first', 'True'), ('max_hamming', '4'), ('lock_confirm', '2'), ('loss_threshold',
+      '3'), ('verify_guard_bits', '24'), ('trust_tags', 'False')], [('0', 'byte',
+      1)], [('0', 'byte', 1), ('1', 'float', 1)], '', ['lock_confirm', 'msb_first',
+      'trust_tags'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1344, 1084.0]
+    rotation: 0
+    state: true
+- name: epy_block_4
+  id: epy_block
+  parameters:
+    _source_code: "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\"\"\"\ntm_deframer_stub_floattap\
+      \ \u2014 TM Deframer with a float mirror tap.\n\nInput : BYTES (uint8), tagged\
+      \ stream, one 'packet_len' tag per TM frame\n        frame_len = tm_hdr_len\
+      \ + tm_body_len (e.g., 6 + 1109 = 1115).\nOut[0]: BYTES (uint8) \u2014 SPP payload\
+      \ bytes, tagged with 'packet_len' = spp_len\nOut[1]: FLOATS (float32) \u2014\
+      \ SPP payload mirrored as floats (for Number Sink/Tag Debug)\n\nModes for determining\
+      \ SPP length:\n  - mode=\"len_field\"   : read uint16 length at 'len_field_offset'\
+      \ in header (big-endian).\n  - mode=\"trim_zeros\"  : trim trailing 0x00 from\
+      \ body (default).\n  - mode=\"fixed\"       : always emit tm_body_len bytes.\n\
+      \nNotes:\n- Stub deframer that inverts a simple TX \"tm_framer_stub\" (fixed\
+      \ body + zero padding).\n- Adds a float tap so you can visualize values and\
+      \ tags easily in QT Number Sink.\n\"\"\"\n\nimport numpy as np, pmt\nfrom gnuradio\
+      \ import gr\n\nclass blk(gr.basic_block):\n    def __init__(self,\n        \
+      \         tm_hdr_len=6,\n                 tm_body_len=1109,\n              \
+      \   len_tag_key=\"packet_len\",\n                 mode=\"trim_zeros\",     \
+      \     # \"len_field\" | \"trim_zeros\" | \"fixed\"\n                 len_field_offset=6,\
+      \         # where a 2B length would live (if you add it)\n                 len_field_big_endian=True,\
+      \  # endianness for length field\n                 forward_other_tags=False\
+      \    # remap non-length tags into SPP offsets\n                 ):\n       \
+      \ gr.basic_block.__init__(self,\n            name=\"tm_deframer_stub_floattap\"\
+      ,\n            in_sig=[np.uint8],\n            out_sig=[np.uint8, np.float32],\
+      \   # <-- byte output + float tap\n        )\n\n        self.tm_hdr_len  = int(tm_hdr_len)\n\
+      \        self.tm_body_len = int(tm_body_len)\n        self.frame_len   = self.tm_hdr_len\
+      \ + self.tm_body_len\n\n        self.len_key_str = str(len_tag_key)\n      \
+      \  self.len_key     = pmt.intern(self.len_key_str)\n\n        self.mode    \
+      \             = str(mode)\n        self.len_field_offset     = int(len_field_offset)\n\
+      \        self.len_field_big_endian = bool(len_field_big_endian)\n        self.forward_other_tags\
+      \   = bool(forward_other_tags)\n\n        try:\n            self.set_tag_propagation_policy(gr.block.TPP_DONT)\n\
+      \        except Exception:\n            pass\n\n    # ---------------- helpers\
+      \ ----------------\n    def _first_len_tag_here(self, n_in):\n        nread\
+      \ = self.nitems_read(0)\n        tags  = self.get_tags_in_window(0, 0, n_in)\n\
+      \        tags.sort(key=lambda t: int(t.offset))\n        for t in tags:\n  \
+      \          if pmt.equal(t.key, self.len_key):\n                return t\n  \
+      \      return None\n\n    def _get_other_tags(self, n_bytes):\n        nread\
+      \ = self.nitems_read(0)\n        tags  = self.get_tags_in_window(0, 0, n_bytes)\n\
+      \        return nread, [t for t in tags if not pmt.equal(t.key, self.len_key)]\n\
+      \n    def _spp_len_from_header(self, hdr: bytes) -> int:\n        off = self.len_field_offset\n\
+      \        if off + 2 <= len(hdr):\n            b0, b1 = hdr[off], hdr[off+1]\n\
+      \            if self.len_field_big_endian:\n                L = (b0 << 8) |\
+      \ b1\n            else:\n                L = (b1 << 8) | b0\n            return\
+      \ int(L)\n        return -1\n\n    def _spp_len_from_trim(self, body: bytes)\
+      \ -> int:\n        idx = len(body) - 1\n        while idx >= 0 and body[idx]\
+      \ == 0:\n            idx -= 1\n        return idx + 1\n\n    # ----------------\
+      \ work ----------------\n    def general_work(self, input_items, output_items):\n\
+      \        inp  = input_items[0]\n        outB = output_items[0]     # bytes out\n\
+      \        outF = output_items[1]     # float tap out\n\n        n_in  = len(inp)\n\
+      \        n_oB  = len(outB)\n        n_oF  = len(outF)\n        if n_in == 0\
+      \ or n_oB == 0 or n_oF == 0:\n            return 0\n\n        t = self._first_len_tag_here(n_in)\n\
+      \        if t is None:\n            return 0\n\n        nread = self.nitems_read(0)\n\
+      \        rel   = int(t.offset - nread)\n        if rel > 0:\n            self.consume(0,\
+      \ rel)\n            return 0\n\n        # Expect and wait for a full TM frame\n\
+      \        try:\n            L = int(pmt.to_long(t.value))\n        except Exception:\n\
+      \            return 0\n\n        if L < self.frame_len or n_in < self.frame_len:\n\
+      \            return 0\n\n        frame = bytes(inp[:self.frame_len])\n     \
+      \   hdr   = frame[:self.tm_hdr_len]\n        body  = frame[self.tm_hdr_len:]\n\
+      \n        # Determine SPP length\n        if self.mode == \"len_field\":\n \
+      \           spp_len = self._spp_len_from_header(hdr)\n            if spp_len\
+      \ < 0:\n                spp_len = min(self.tm_body_len, self._spp_len_from_trim(body))\n\
+      \            else:\n                spp_len = max(0, min(spp_len, self.tm_body_len))\n\
+      \        elif self.mode == \"fixed\":\n            spp_len = self.tm_body_len\n\
+      \        else:  # \"trim_zeros\"\n            spp_len = min(self.tm_body_len,\
+      \ self._spp_len_from_trim(body))\n\n        if spp_len < 0:\n            self.consume(0,\
+      \ self.frame_len)\n            return 0\n\n        # Ensure output space on\
+      \ both outputs\n        if n_oB < spp_len or n_oF < spp_len:\n            return\
+      \ 0\n\n        # Write bytes to out0\n        if spp_len > 0:\n            outB[:spp_len]\
+      \ = np.frombuffer(body[:spp_len], dtype=np.uint8)\n\n            # Mirror to\
+      \ float32 on out1 (byte value \u2192 float value)\n            # Avoid Python\
+      \ loops: vectorized cast\n            outF[:spp_len] = np.frombuffer(body[:spp_len],\
+      \ dtype=np.uint8).astype(np.float32)\n\n        # Tag both outputs at their\
+      \ respective write cursors\n        w0 = self.nitems_written(0)\n        w1\
+      \ = self.nitems_written(1)\n        self.add_item_tag(0, w0, self.len_key, pmt.from_long(spp_len))\n\
+      \        self.add_item_tag(1, w1, self.len_key, pmt.from_long(spp_len))\n\n\
+      \        # Optionally forward non-length tags into SPP offsets (both outs)\n\
+      \        if self.forward_other_tags and spp_len > 0:\n            nread0, others\
+      \ = self._get_other_tags(self.frame_len)\n            for tt in others:\n  \
+      \              k = int(tt.offset - nread0) - self.tm_hdr_len\n             \
+      \   if 0 <= k < spp_len:\n                    try:\n                       \
+      \ self.add_item_tag(0, w0 + k, tt.key, tt.value, tt.srcid)\n               \
+      \         self.add_item_tag(1, w1 + k, tt.key, tt.value, tt.srcid)\n       \
+      \             except TypeError:\n                        self.add_item_tag(0,\
+      \ w0 + k, tt.key, tt.value)\n                        self.add_item_tag(1, w1\
+      \ + k, tt.key, tt.value)\n\n        # Consume exactly one TM frame\n       \
+      \ self.consume(0, self.frame_len)\n        # We produced spp_len items on BOTH\
+      \ outputs\n        return spp_len\n\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    forward_other_tags: 'True'
+    len_field_big_endian: 'True'
+    len_field_offset: '6'
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    mode: '"trim_zeros"'
+    tm_body_len: TM_BODY_LEN
+    tm_hdr_len: TM_HDR_LEN
+  states:
+    _io_cache: ('tm_deframer_stub_floattap', 'blk', [('tm_hdr_len', '6'), ('tm_body_len',
+      '1109'), ('len_tag_key', "'packet_len'"), ('mode', "'trim_zeros'"), ('len_field_offset',
+      '6'), ('len_field_big_endian', 'True'), ('forward_other_tags', 'False')], [('0',
+      'byte', 1)], [('0', 'byte', 1), ('1', 'float', 1)], '', ['forward_other_tags',
+      'len_field_big_endian', 'len_field_offset', 'mode', 'tm_body_len', 'tm_hdr_len'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1080, 644.0]
+    rotation: 180
+    state: true
+- name: epy_block_5_1
+  id: epy_block
+  parameters:
+    _source_code: "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\"\"\"\nlen_meter_ts_f32\
+      \ \u2014 emits one float sample per frame equal to the length tag.\n\nInput\
+      \ : FLOATS (np.float32), tagged stream with 'packet_len' per frame.\nOutput:\
+      \ FLOATS (np.float32), 1 sample per frame = float(packet_len).\n\nTypical use:\n\
+      [float-tap] \u2192 len_meter_ts_f32 \u2192 QT GUI Number Sink\n\"\"\"\n\nimport\
+      \ numpy as np\nimport pmt\nfrom gnuradio import gr\n\nclass blk(gr.basic_block):\n\
+      \    def __init__(self, len_tag_key=\"packet_len\"):\n        gr.basic_block.__init__(self,\n\
+      \            name=\"len_meter_ts_f32\",\n            in_sig=[np.float32],\n\
+      \            out_sig=[np.float32],\n        )\n        self.len_key_str = str(len_tag_key)\n\
+      \        self.len_key     = pmt.intern(self.len_key_str)\n\n        # We produce\
+      \ our own outputs; don't auto-forward tags.\n        try:\n            self.set_tag_propagation_policy(gr.block.TPP_DONT)\n\
+      \        except Exception:\n            pass\n\n    def _first_len_tag_here(self,\
+      \ n_in):\n        \"\"\"Return first length tag at/after current read index\
+      \ within window.\"\"\"\n        tags = self.get_tags_in_window(0, 0, n_in)\n\
+      \        if not tags:\n            return None\n        tags.sort(key=lambda\
+      \ t: int(t.offset))\n        for t in tags:\n            if pmt.equal(t.key,\
+      \ self.len_key):\n                return t\n        return None\n\n    def general_work(self,\
+      \ input_items, output_items):\n        inp = input_items[0]\n        out = output_items[0]\n\
+      \n        n_in  = len(inp)\n        n_out = len(out)\n        if n_in == 0 or\
+      \ n_out == 0:\n            return 0\n\n        # Find the first length tag at/after\
+      \ the current read pointer\n        t = self._first_len_tag_here(n_in)\n   \
+      \     if t is None:\n            return 0\n\n        nread = self.nitems_read(0)\n\
+      \        rel   = int(t.offset - nread)\n\n        # If the tag starts later\
+      \ in this window, advance to it\n        if rel > 0:\n            self.consume(0,\
+      \ rel)\n            return 0\n\n        # Tag is at current cursor; parse length\n\
+      \        try:\n            L = int(pmt.to_long(t.value))\n        except Exception:\n\
+      \            # If the tag value isn't a PMT integer, try to coerce\n       \
+      \     try:\n                L = int(str(t.value))\n            except Exception:\n\
+      \                # Can't parse; drop one item to avoid deadlock\n          \
+      \      self.consume(0, 1)\n                return 0\n\n        # Wait until\
+      \ the full frame is present\n        if n_in < L:\n            return 0\n\n\
+      \        # Emit one float with the length and consume exactly one frame\n  \
+      \      out[0] = float(L)\n        self.consume(0, L)\n        return 1\n\n"
+    affinity: ''
+    alias: len_reed_sol_rx
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('len_meter_ts_f32', 'blk', [('len_tag_key', "'packet_len'")], [('0',
+      'float', 1)], [('0', 'float', 1)], '', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2128, 1252.0]
+    rotation: 180
+    state: enabled
+- name: epy_block_5_1_0
+  id: epy_block
+  parameters:
+    _source_code: "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\"\"\"\nlen_meter_ts_f32\
+      \ \u2014 emits one float sample per frame equal to the length tag.\n\nInput\
+      \ : FLOATS (np.float32), tagged stream with 'packet_len' per frame.\nOutput:\
+      \ FLOATS (np.float32), 1 sample per frame = float(packet_len).\n\nTypical use:\n\
+      [float-tap] \u2192 len_meter_ts_f32 \u2192 QT GUI Number Sink\n\"\"\"\n\nimport\
+      \ numpy as np\nimport pmt\nfrom gnuradio import gr\n\nclass blk(gr.basic_block):\n\
+      \    def __init__(self, len_tag_key=\"packet_len\"):\n        gr.basic_block.__init__(self,\n\
+      \            name=\"len_meter_ts_f32\",\n            in_sig=[np.float32],\n\
+      \            out_sig=[np.float32],\n        )\n        self.len_key_str = str(len_tag_key)\n\
+      \        self.len_key     = pmt.intern(self.len_key_str)\n\n        # We produce\
+      \ our own outputs; don't auto-forward tags.\n        try:\n            self.set_tag_propagation_policy(gr.block.TPP_DONT)\n\
+      \        except Exception:\n            pass\n\n    def _first_len_tag_here(self,\
+      \ n_in):\n        \"\"\"Return first length tag at/after current read index\
+      \ within window.\"\"\"\n        tags = self.get_tags_in_window(0, 0, n_in)\n\
+      \        if not tags:\n            return None\n        tags.sort(key=lambda\
+      \ t: int(t.offset))\n        for t in tags:\n            if pmt.equal(t.key,\
+      \ self.len_key):\n                return t\n        return None\n\n    def general_work(self,\
+      \ input_items, output_items):\n        inp = input_items[0]\n        out = output_items[0]\n\
+      \n        n_in  = len(inp)\n        n_out = len(out)\n        if n_in == 0 or\
+      \ n_out == 0:\n            return 0\n\n        # Find the first length tag at/after\
+      \ the current read pointer\n        t = self._first_len_tag_here(n_in)\n   \
+      \     if t is None:\n            return 0\n\n        nread = self.nitems_read(0)\n\
+      \        rel   = int(t.offset - nread)\n\n        # If the tag starts later\
+      \ in this window, advance to it\n        if rel > 0:\n            self.consume(0,\
+      \ rel)\n            return 0\n\n        # Tag is at current cursor; parse length\n\
+      \        try:\n            L = int(pmt.to_long(t.value))\n        except Exception:\n\
+      \            # If the tag value isn't a PMT integer, try to coerce\n       \
+      \     try:\n                L = int(str(t.value))\n            except Exception:\n\
+      \                # Can't parse; drop one item to avoid deadlock\n          \
+      \      self.consume(0, 1)\n                return 0\n\n        # Wait until\
+      \ the full frame is present\n        if n_in < L:\n            return 0\n\n\
+      \        # Emit one float with the length and consume exactly one frame\n  \
+      \      out[0] = float(L)\n        self.consume(0, L)\n        return 1\n\n"
+    affinity: ''
+    alias: len_asm_rx
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('len_meter_ts_f32', 'blk', [('len_tag_key', "'packet_len'")], [('0',
+      'float', 1)], [('0', 'float', 1)], '', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1576, 1308.0]
+    rotation: 180
+    state: enabled
+- name: epy_block_5_1_1
+  id: epy_block
+  parameters:
+    _source_code: "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\"\"\"\nlen_meter_ts_f32\
+      \ \u2014 emits one float sample per frame equal to the length tag.\n\nInput\
+      \ : FLOATS (np.float32), tagged stream with 'packet_len' per frame.\nOutput:\
+      \ FLOATS (np.float32), 1 sample per frame = float(packet_len).\n\nTypical use:\n\
+      [float-tap] \u2192 len_meter_ts_f32 \u2192 QT GUI Number Sink\n\"\"\"\n\nimport\
+      \ numpy as np\nimport pmt\nfrom gnuradio import gr\n\nclass blk(gr.basic_block):\n\
+      \    def __init__(self, len_tag_key=\"packet_len\"):\n        gr.basic_block.__init__(self,\n\
+      \            name=\"len_meter_ts_f32\",\n            in_sig=[np.float32],\n\
+      \            out_sig=[np.float32],\n        )\n        self.len_key_str = str(len_tag_key)\n\
+      \        self.len_key     = pmt.intern(self.len_key_str)\n\n        # We produce\
+      \ our own outputs; don't auto-forward tags.\n        try:\n            self.set_tag_propagation_policy(gr.block.TPP_DONT)\n\
+      \        except Exception:\n            pass\n\n    def _first_len_tag_here(self,\
+      \ n_in):\n        \"\"\"Return first length tag at/after current read index\
+      \ within window.\"\"\"\n        tags = self.get_tags_in_window(0, 0, n_in)\n\
+      \        if not tags:\n            return None\n        tags.sort(key=lambda\
+      \ t: int(t.offset))\n        for t in tags:\n            if pmt.equal(t.key,\
+      \ self.len_key):\n                return t\n        return None\n\n    def general_work(self,\
+      \ input_items, output_items):\n        inp = input_items[0]\n        out = output_items[0]\n\
+      \n        n_in  = len(inp)\n        n_out = len(out)\n        if n_in == 0 or\
+      \ n_out == 0:\n            return 0\n\n        # Find the first length tag at/after\
+      \ the current read pointer\n        t = self._first_len_tag_here(n_in)\n   \
+      \     if t is None:\n            return 0\n\n        nread = self.nitems_read(0)\n\
+      \        rel   = int(t.offset - nread)\n\n        # If the tag starts later\
+      \ in this window, advance to it\n        if rel > 0:\n            self.consume(0,\
+      \ rel)\n            return 0\n\n        # Tag is at current cursor; parse length\n\
+      \        try:\n            L = int(pmt.to_long(t.value))\n        except Exception:\n\
+      \            # If the tag value isn't a PMT integer, try to coerce\n       \
+      \     try:\n                L = int(str(t.value))\n            except Exception:\n\
+      \                # Can't parse; drop one item to avoid deadlock\n          \
+      \      self.consume(0, 1)\n                return 0\n\n        # Wait until\
+      \ the full frame is present\n        if n_in < L:\n            return 0\n\n\
+      \        # Emit one float with the length and consume exactly one frame\n  \
+      \      out[0] = float(L)\n        self.consume(0, L)\n        return 1\n\n"
+    affinity: ''
+    alias: len_rand_rx
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('len_meter_ts_f32', 'blk', [('len_tag_key', "'packet_len'")], [('0',
+      'float', 1)], [('0', 'float', 1)], '', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1456, 820.0]
+    rotation: 0
+    state: enabled
+- name: epy_block_5_1_2
+  id: epy_block
+  parameters:
+    _source_code: "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\"\"\"\nlen_meter_ts_f32\
+      \ \u2014 emits one float sample per frame equal to the length tag.\n\nInput\
+      \ : FLOATS (np.float32), tagged stream with 'packet_len' per frame.\nOutput:\
+      \ FLOATS (np.float32), 1 sample per frame = float(packet_len).\n\nTypical use:\n\
+      [float-tap] \u2192 len_meter_ts_f32 \u2192 QT GUI Number Sink\n\"\"\"\n\nimport\
+      \ numpy as np\nimport pmt\nfrom gnuradio import gr\n\nclass blk(gr.basic_block):\n\
+      \    def __init__(self, len_tag_key=\"packet_len\"):\n        gr.basic_block.__init__(self,\n\
+      \            name=\"len_meter_ts_f32\",\n            in_sig=[np.float32],\n\
+      \            out_sig=[np.float32],\n        )\n        self.len_key_str = str(len_tag_key)\n\
+      \        self.len_key     = pmt.intern(self.len_key_str)\n\n        # We produce\
+      \ our own outputs; don't auto-forward tags.\n        try:\n            self.set_tag_propagation_policy(gr.block.TPP_DONT)\n\
+      \        except Exception:\n            pass\n\n    def _first_len_tag_here(self,\
+      \ n_in):\n        \"\"\"Return first length tag at/after current read index\
+      \ within window.\"\"\"\n        tags = self.get_tags_in_window(0, 0, n_in)\n\
+      \        if not tags:\n            return None\n        tags.sort(key=lambda\
+      \ t: int(t.offset))\n        for t in tags:\n            if pmt.equal(t.key,\
+      \ self.len_key):\n                return t\n        return None\n\n    def general_work(self,\
+      \ input_items, output_items):\n        inp = input_items[0]\n        out = output_items[0]\n\
+      \n        n_in  = len(inp)\n        n_out = len(out)\n        if n_in == 0 or\
+      \ n_out == 0:\n            return 0\n\n        # Find the first length tag at/after\
+      \ the current read pointer\n        t = self._first_len_tag_here(n_in)\n   \
+      \     if t is None:\n            return 0\n\n        nread = self.nitems_read(0)\n\
+      \        rel   = int(t.offset - nread)\n\n        # If the tag starts later\
+      \ in this window, advance to it\n        if rel > 0:\n            self.consume(0,\
+      \ rel)\n            return 0\n\n        # Tag is at current cursor; parse length\n\
+      \        try:\n            L = int(pmt.to_long(t.value))\n        except Exception:\n\
+      \            # If the tag value isn't a PMT integer, try to coerce\n       \
+      \     try:\n                L = int(str(t.value))\n            except Exception:\n\
+      \                # Can't parse; drop one item to avoid deadlock\n          \
+      \      self.consume(0, 1)\n                return 0\n\n        # Wait until\
+      \ the full frame is present\n        if n_in < L:\n            return 0\n\n\
+      \        # Emit one float with the length and consume exactly one frame\n  \
+      \      out[0] = float(L)\n        self.consume(0, L)\n        return 1\n\n"
+    affinity: ''
+    alias: len_conv_rx
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('len_meter_ts_f32', 'blk', [('len_tag_key', "'packet_len'")], [('0',
+      'float', 1)], [('0', 'float', 1)], '', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [968, 1324.0]
+    rotation: 180
+    state: enabled
+- name: epy_block_5_1_3
+  id: epy_block
+  parameters:
+    _source_code: "#!/usr/bin/env python3\n# -*- coding: utf-8 -*-\n\"\"\"\nlen_meter_ts_f32\
+      \ \u2014 emits one float sample per frame equal to the length tag.\n\nInput\
+      \ : FLOATS (np.float32), tagged stream with 'packet_len' per frame.\nOutput:\
+      \ FLOATS (np.float32), 1 sample per frame = float(packet_len).\n\nTypical use:\n\
+      [float-tap] \u2192 len_meter_ts_f32 \u2192 QT GUI Number Sink\n\"\"\"\n\nimport\
+      \ numpy as np\nimport pmt\nfrom gnuradio import gr\n\nclass blk(gr.basic_block):\n\
+      \    def __init__(self, len_tag_key=\"packet_len\"):\n        gr.basic_block.__init__(self,\n\
+      \            name=\"len_meter_ts_f32\",\n            in_sig=[np.float32],\n\
+      \            out_sig=[np.float32],\n        )\n        self.len_key_str = str(len_tag_key)\n\
+      \        self.len_key     = pmt.intern(self.len_key_str)\n\n        # We produce\
+      \ our own outputs; don't auto-forward tags.\n        try:\n            self.set_tag_propagation_policy(gr.block.TPP_DONT)\n\
+      \        except Exception:\n            pass\n\n    def _first_len_tag_here(self,\
+      \ n_in):\n        \"\"\"Return first length tag at/after current read index\
+      \ within window.\"\"\"\n        tags = self.get_tags_in_window(0, 0, n_in)\n\
+      \        if not tags:\n            return None\n        tags.sort(key=lambda\
+      \ t: int(t.offset))\n        for t in tags:\n            if pmt.equal(t.key,\
+      \ self.len_key):\n                return t\n        return None\n\n    def general_work(self,\
+      \ input_items, output_items):\n        inp = input_items[0]\n        out = output_items[0]\n\
+      \n        n_in  = len(inp)\n        n_out = len(out)\n        if n_in == 0 or\
+      \ n_out == 0:\n            return 0\n\n        # Find the first length tag at/after\
+      \ the current read pointer\n        t = self._first_len_tag_here(n_in)\n   \
+      \     if t is None:\n            return 0\n\n        nread = self.nitems_read(0)\n\
+      \        rel   = int(t.offset - nread)\n\n        # If the tag starts later\
+      \ in this window, advance to it\n        if rel > 0:\n            self.consume(0,\
+      \ rel)\n            return 0\n\n        # Tag is at current cursor; parse length\n\
+      \        try:\n            L = int(pmt.to_long(t.value))\n        except Exception:\n\
+      \            # If the tag value isn't a PMT integer, try to coerce\n       \
+      \     try:\n                L = int(str(t.value))\n            except Exception:\n\
+      \                # Can't parse; drop one item to avoid deadlock\n          \
+      \      self.consume(0, 1)\n                return 0\n\n        # Wait until\
+      \ the full frame is present\n        if n_in < L:\n            return 0\n\n\
+      \        # Emit one float with the length and consume exactly one frame\n  \
+      \      out[0] = float(L)\n        self.consume(0, L)\n        return 1\n\n"
+    affinity: ''
+    alias: len_rs_rx
+    comment: ''
+    len_tag_key: '"packet_len"'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('len_meter_ts_f32', 'blk', [('len_tag_key', "'packet_len'")], [('0',
+      'float', 1)], [('0', 'float', 1)], '', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [912, 820.0]
+    rotation: 0
+    state: enabled
+- name: network_socket_pdu_0
+  id: network_socket_pdu
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    host: 0.0.0.0
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    mtu: '4096'
+    port: '52002'
+    tcp_no_delay: 'False'
+    type: UDP_SERVER
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [112, 1148.0]
+    rotation: 0
+    state: true
+- name: network_socket_pdu_1
+  id: network_socket_pdu
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    host: 127.0.0.1
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    mtu: '4096'
+    port: '52003'
+    tcp_no_delay: 'False'
+    type: UDP_CLIENT
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [104, 652.0]
+    rotation: 180
+    state: true
+- name: pdu_pdu_to_tagged_stream_0
+  id: pdu_pdu_to_tagged_stream
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    tag: packet_len
+    type: byte
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [320, 1172.0]
+    rotation: 0
+    state: true
+- name: pdu_tagged_stream_to_pdu_0
+  id: pdu_tagged_stream_to_pdu
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    tag: packet_len
+    type: byte
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [312, 676.0]
+    rotation: 180
+    state: true
+- name: qtgui_number_sink_0_0_0_82
+  id: qtgui_number_sink
+  parameters:
+    affinity: ''
+    alias: ns_randy_rx
+    autoscale: 'True'
+    avg: '0'
+    color1: ("black", "black")
+    color10: ("black", "black")
+    color2: ("black", "black")
+    color3: ("black", "black")
+    color4: ("black", "black")
+    color5: ("black", "black")
+    color6: ("black", "black")
+    color7: ("black", "black")
+    color8: ("black", "black")
+    color9: ("black", "black")
+    comment: ''
+    factor1: '1'
+    factor10: '1'
+    factor2: '1'
+    factor3: '1'
+    factor4: '1'
+    factor5: '1'
+    factor6: '1'
+    factor7: '1'
+    factor8: '1'
+    factor9: '1'
+    graph_type: qtgui.NUM_GRAPH_HORIZ
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    max: '2000'
+    min: '0'
+    name: '""'
+    nconnections: '1'
+    type: float
+    unit1: ''
+    unit10: ''
+    unit2: ''
+    unit3: ''
+    unit4: ''
+    unit5: ''
+    unit6: ''
+    unit7: ''
+    unit8: ''
+    unit9: ''
+    update_time: '0.10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1664, 796.0]
+    rotation: 0
+    state: enabled
+- name: qtgui_number_sink_0_0_83
+  id: qtgui_number_sink
+  parameters:
+    affinity: ''
+    alias: ns_rand_rx
+    autoscale: 'True'
+    avg: '0'
+    color1: ("black", "black")
+    color10: ("black", "black")
+    color2: ("black", "black")
+    color3: ("black", "black")
+    color4: ("black", "black")
+    color5: ("black", "black")
+    color6: ("black", "black")
+    color7: ("black", "black")
+    color8: ("black", "black")
+    color9: ("black", "black")
+    comment: ''
+    factor1: '1'
+    factor10: '1'
+    factor2: '1'
+    factor3: '1'
+    factor4: '1'
+    factor5: '1'
+    factor6: '1'
+    factor7: '1'
+    factor8: '1'
+    factor9: '1'
+    graph_type: qtgui.NUM_GRAPH_HORIZ
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    max: '2000'
+    min: '0'
+    name: '""'
+    nconnections: '1'
+    type: float
+    unit1: ''
+    unit10: ''
+    unit2: ''
+    unit3: ''
+    unit4: ''
+    unit5: ''
+    unit6: ''
+    unit7: ''
+    unit8: ''
+    unit9: ''
+    update_time: '0.10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1344, 1284.0]
+    rotation: 180
+    state: enabled
+- name: qtgui_number_sink_0_1_1_84
+  id: qtgui_number_sink
+  parameters:
+    affinity: ''
+    alias: ns_conv_rx
+    autoscale: 'False'
+    avg: '0'
+    color1: ("black", "black")
+    color10: ("black", "black")
+    color2: ("black", "black")
+    color3: ("black", "black")
+    color4: ("black", "black")
+    color5: ("black", "black")
+    color6: ("black", "black")
+    color7: ("black", "black")
+    color8: ("black", "black")
+    color9: ("black", "black")
+    comment: ''
+    factor1: '1'
+    factor10: '1'
+    factor2: '1'
+    factor3: '1'
+    factor4: '1'
+    factor5: '1'
+    factor6: '1'
+    factor7: '1'
+    factor8: '1'
+    factor9: '1'
+    graph_type: qtgui.NUM_GRAPH_HORIZ
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    max: '1'
+    min: '-1'
+    name: '""'
+    nconnections: '1'
+    type: float
+    unit1: ''
+    unit10: ''
+    unit2: ''
+    unit3: ''
+    unit4: ''
+    unit5: ''
+    unit6: ''
+    unit7: ''
+    unit8: ''
+    unit9: ''
+    update_time: '0.10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [752, 1300.0]
+    rotation: 180
+    state: enabled
+- name: qtgui_number_sink_0_1_81
+  id: qtgui_number_sink
+  parameters:
+    affinity: ''
+    alias: ns_rs_rx
+    autoscale: 'False'
+    avg: '0'
+    color1: ("black", "black")
+    color10: ("black", "black")
+    color2: ("black", "black")
+    color3: ("black", "black")
+    color4: ("black", "black")
+    color5: ("black", "black")
+    color6: ("black", "black")
+    color7: ("black", "black")
+    color8: ("black", "black")
+    color9: ("black", "black")
+    comment: ''
+    factor1: '1'
+    factor10: '1'
+    factor2: '1'
+    factor3: '1'
+    factor4: '1'
+    factor5: '1'
+    factor6: '1'
+    factor7: '1'
+    factor8: '1'
+    factor9: '1'
+    graph_type: qtgui.NUM_GRAPH_HORIZ
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    max: '1'
+    min: '-1'
+    name: '""'
+    nconnections: '1'
+    type: float
+    unit1: ''
+    unit10: ''
+    unit2: ''
+    unit3: ''
+    unit4: ''
+    unit5: ''
+    unit6: ''
+    unit7: ''
+    unit8: ''
+    unit9: ''
+    update_time: '0.10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1896, 1220.0]
+    rotation: 180
+    state: enabled
+- name: qtgui_number_sink_80
+  id: qtgui_number_sink
+  parameters:
+    affinity: ''
+    alias: ns_tm_rx
+    autoscale: 'True'
+    avg: '0'
+    color1: ("black", "black")
+    color10: ("black", "black")
+    color2: ("black", "black")
+    color3: ("black", "black")
+    color4: ("black", "black")
+    color5: ("black", "black")
+    color6: ("black", "black")
+    color7: ("black", "black")
+    color8: ("black", "black")
+    color9: ("black", "black")
+    comment: ''
+    factor1: '1'
+    factor10: '1'
+    factor2: '1'
+    factor3: '1'
+    factor4: '1'
+    factor5: '1'
+    factor6: '1'
+    factor7: '1'
+    factor8: '1'
+    factor9: '1'
+    graph_type: qtgui.NUM_GRAPH_HORIZ
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    max: '2000'
+    min: '0'
+    name: '""'
+    nconnections: '1'
+    type: float
+    unit1: ''
+    unit10: ''
+    unit2: ''
+    unit3: ''
+    unit4: ''
+    unit5: ''
+    unit6: ''
+    unit7: ''
+    unit8: ''
+    unit9: ''
+    update_time: '0.10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1112, 796.0]
+    rotation: 0
+    state: enabled
+
+connections:
+- [blocks_tagged_stream_align_0, '0', pdu_tagged_stream_to_pdu_0, '0']
+- [epy_block_0, '0', blocks_file_sink_0_0_0_2, '0']
+- [epy_block_0, '0', epy_block_3, '0']
+- [epy_block_0, '1', epy_block_5_1_2, '0']
+- [epy_block_1, '0', blocks_file_sink_0_0_0, '0']
+- [epy_block_1, '0', epy_block_2, '0']
+- [epy_block_1, '1', blocks_tag_debug_1, '0']
+- [epy_block_1, '1', epy_block_5_1, '0']
+- [epy_block_2, '0', blocks_file_sink_0_0_0_0_0, '0']
+- [epy_block_2, '0', epy_block_4, '0']
+- [epy_block_2, '1', epy_block_5_1_1, '0']
+- [epy_block_3, '0', blocks_file_sink_0_0_0_0, '0']
+- [epy_block_3, '0', epy_block_1, '0']
+- [epy_block_3, '1', epy_block_5_1_0, '0']
+- [epy_block_4, '0', blocks_file_sink_0_0, '0']
+- [epy_block_4, '0', blocks_tagged_stream_align_0, '0']
+- [epy_block_4, '1', epy_block_5_1_3, '0']
+- [epy_block_5_1, '0', qtgui_number_sink_0_1_81, '0']
+- [epy_block_5_1_0, '0', qtgui_number_sink_0_0_83, '0']
+- [epy_block_5_1_1, '0', qtgui_number_sink_0_0_0_82, '0']
+- [epy_block_5_1_2, '0', qtgui_number_sink_0_1_1_84, '0']
+- [epy_block_5_1_3, '0', qtgui_number_sink_80, '0']
+- [network_socket_pdu_0, pdus, pdu_pdu_to_tagged_stream_0, pdus]
+- [pdu_pdu_to_tagged_stream_0, '0', blocks_file_sink_0_0_0_2_0, '0']
+- [pdu_pdu_to_tagged_stream_0, '0', epy_block_0, '0']
+- [pdu_tagged_stream_to_pdu_0, pdus, network_socket_pdu_1, pdus]
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.7.0
